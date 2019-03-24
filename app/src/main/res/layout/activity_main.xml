@@ -15,43 +15,45 @@
         android:textSize="50dp"
         android:gravity="center"
         android:textColor="#000000"
-        android:fontFamily="sans-serif-light"
+        android:fontFamily="sans-serif-smallcaps"
 
         />
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/dictionaryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/dictionary"
+        app:srcCompat="@drawable/merriamwebster"
         android:layout_below="@id/text"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="75dp"
         android:layout_marginTop="110dp"
         />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/newsFeedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/newsfeed"
-        android:layout_toRightOf="@id/imageButton"
+        app:srcCompat="@drawable/ressnews2"
+        android:layout_toRightOf="@id/dictionaryButton"
         android:layout_below="@id/text"
         android:layout_marginTop="110dp"
+        android:layout_marginLeft="10dp"
         />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/newYorkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/newyorktimes"
-        android:layout_below="@id/imageButton"
-        android:layout_marginLeft="50dp"/>
+        app:srcCompat="@drawable/nytimes2"
+        android:layout_below="@id/dictionaryButton"
+        android:layout_marginLeft="75dp"/>
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/airplaneButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/airplane"
-        android:layout_toRightOf="@id/imageButton"
-        android:layout_below="@id/imageButton"
+        app:srcCompat="@drawable/paperplane2"
+        android:layout_toRightOf="@id/dictionaryButton"
+        android:layout_below="@id/dictionaryButton"
+        android:layout_marginLeft="10dp"
 />
 </RelativeLayout>
