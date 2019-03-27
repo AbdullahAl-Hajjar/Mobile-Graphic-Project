@@ -1,7 +1,6 @@
 package com.example.androidfinalgroupproject;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -36,14 +33,14 @@ public class NewYorkTimes extends AppCompatActivity {
     EditText etQuery;
     GridView gvResults;
     TextView emptyText;
-    ArrayList<Article> articles;
-    ArticleArrayAdapter adapter;
+    ArrayList<NewYorkTimes_Article> articles;
+    NewYorkTimes_ArticleArrayAdapter adapter;
     Button btnSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.NewYorkTimes_activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setupViews();
@@ -53,8 +50,8 @@ public class NewYorkTimes extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // create intents
-                Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
-                Article article = articles.get(position);
+                Intent intent = new Intent(getApplicationContext(), NewYorktimes_ArticleActivity.class);
+                NewYorkTimes_Article article = articles.get(position);
                 // pass article
                 intent.putExtra("article", article);
                 // display article
@@ -76,7 +73,7 @@ public class NewYorkTimes extends AppCompatActivity {
         gvResults = (GridView) findViewById(R.id.gvResults);
         btnSearch = (Button) findViewById(R.id.btnSearch);
         articles = new ArrayList<>();
-        adapter = new ArticleArrayAdapter(this, articles);
+        adapter = new NewYorkTimes_ArticleArrayAdapter(this, articles);
         gvResults.setAdapter(adapter);
     }
     public void onArticleSearch(View view){
@@ -105,7 +102,7 @@ public class NewYorkTimes extends AppCompatActivity {
                 try {
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
                     //Log.d("DEBUG", response.toString());
-                    adapter.addAll(Article.fromJSONArray(articleJsonResults));
+                    adapter.addAll(NewYorkTimes_Article.fromJSONArray(articleJsonResults));
                     //adapter.notifyDataSetChanged();
                     Log.d("DEBUG", articles.toString());
                 } catch (JSONException e){
