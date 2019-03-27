@@ -11,7 +11,7 @@ public class NewYorktimes_ArticleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.NewYorkTimes_activity_article);
+        setContentView(R.layout.newyorktimes_activity_article);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         NewYorkTimes_Article article = (NewYorkTimes_Article) getIntent().getSerializableExtra("article");

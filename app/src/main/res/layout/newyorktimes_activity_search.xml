@@ -16,6 +16,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
 
-    <include layout="@layout/NewYorkTimes_content_search" />
+    <include layout="@layout/newyorktimes_content_search" />
 
 </android.support.design.widget.CoordinatorLayout>

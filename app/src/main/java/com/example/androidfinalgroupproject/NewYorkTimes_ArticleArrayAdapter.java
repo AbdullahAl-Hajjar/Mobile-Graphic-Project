@@ -29,7 +29,7 @@ public class NewYorkTimes_ArticleArrayAdapter extends ArrayAdapter<NewYorkTimes_
         //not recycling; inflate layout
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.NewYorkTimes_item_article_result, parent, false);
+            convertView = inflater.inflate(R.layout.newyorktimes_item_article_result, parent, false);
         }
         //find image view
         ImageView imageView = (ImageView) convertView.findViewById(R.id.ivImage);

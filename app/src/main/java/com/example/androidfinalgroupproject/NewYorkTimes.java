@@ -40,7 +40,7 @@ public class NewYorkTimes extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.NewYorkTimes_activity_search);
+        setContentView(R.layout.newyorktimes_activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setupViews();
