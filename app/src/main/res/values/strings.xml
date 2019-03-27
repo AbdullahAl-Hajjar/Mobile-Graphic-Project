@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">AndroidFinalGroupProject</string>
     <string name="title">DAILY WIT</string>
+    <string name="savedWords">View saved words</string>
+    <string name="dictionaryInfo">Info</string>
+    <string name="searchHint">Search for a word…</string>
+    <string name="saveButton">Save</string>
+    <string name="dictionaryTitle">Dictionary</string>
 </resources>
