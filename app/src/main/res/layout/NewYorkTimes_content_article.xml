@@ -8,8 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ArticleActivity"
-    tools:showIn="@layout/activity_article">
+    tools:context=".NewYorktimes_ArticleActivity"
+    tools:showIn="@layout/NewYorkTimes_activity_article">
 
     <WebView
         android:id="@+id/wvArticle"

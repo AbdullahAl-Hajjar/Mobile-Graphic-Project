@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Article implements Serializable {
+public class NewYorkTimes_Article implements Serializable {
     String webUrl;
 
     public String getWebUrl() {
@@ -25,7 +25,7 @@ public class Article implements Serializable {
     String headline;
     String thumbnail;
 
-    public Article(JSONObject jsonObject) {
+    public NewYorkTimes_Article(JSONObject jsonObject) {
         try {
             this.webUrl = jsonObject.getString("web_url");
             this.headline = jsonObject.getJSONObject("headline").getString("main");
@@ -43,12 +43,12 @@ public class Article implements Serializable {
         }
     }
 
-    public static ArrayList<Article> fromJSONArray(JSONArray array) {
-        ArrayList<Article> results = new ArrayList<>();
+    public static ArrayList<NewYorkTimes_Article> fromJSONArray(JSONArray array) {
+        ArrayList<NewYorkTimes_Article> results = new ArrayList<>();
 
         for (int x = 0; x < array.length(); x++) {
             try {
-                results.add(new Article(array.getJSONObject(x)));
+                results.add(new NewYorkTimes_Article(array.getJSONObject(x)));
             } catch (JSONException e){
                 e.printStackTrace();
             }

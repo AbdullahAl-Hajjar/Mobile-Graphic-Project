@@ -13,9 +13,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ArticleArrayAdapter  extends ArrayAdapter<Article> {
+public class NewYorkTimes_ArticleArrayAdapter extends ArrayAdapter<NewYorkTimes_Article> {
 
-    public ArticleArrayAdapter (Context context, List<Article> articles) {
+    public NewYorkTimes_ArticleArrayAdapter(Context context, List<NewYorkTimes_Article> articles) {
         super (context, android.R.layout.simple_list_item_1, articles);
     }
 
@@ -23,13 +23,13 @@ public class ArticleArrayAdapter  extends ArrayAdapter<Article> {
     public View getView(int position, View convertView, ViewGroup parent) {
         //return super.getView(position, convertView, parent);
         //get the data item for the position
-        Article article = this.getItem(position);
+        NewYorkTimes_Article article = this.getItem(position);
 
         //check if existing view is being recycled
         //not recycling; inflate layout
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.item_article_result, parent, false);
+            convertView = inflater.inflate(R.layout.NewYorkTimes_item_article_result, parent, false);
         }
         //find image view
         ImageView imageView = (ImageView) convertView.findViewById(R.id.ivImage);
