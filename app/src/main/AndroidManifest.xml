@@ -10,9 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".NewYorktimes_ArticleActivity"
-
             android:theme="@style/AppTheme.NoActionBar"  />
-        <activity android:name=".NewYorkTimes" />
+        <activity android:name=".NewYorkTimes"
+            android:theme="@style/AppTheme.NoActionBar"  />
         <activity android:name=".Dictionary" />
         <activity android:name=".PlaneTracker" />
         <activity android:name=".NewsFeed" />
