@@ -1,11 +1,12 @@
 package com.example.androidfinalgroupproject;
 
+import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,11 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DictionarySavedWords extends AppCompatActivity {
-
-    int numWords = 6;
+    ArrayList<String> wordList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,42 +36,50 @@ public class DictionarySavedWords extends AppCompatActivity {
         }
         toolbar.setNavigationOnClickListener(btn -> finish());
 
-        ListAdapter adt = new MyArrayAdapter(new String[] {"Word 1", "Word 2", "Word 3"});
-        ListView theList = (ListView)findViewById(R.id.wordList);
+        // Add words to saved words array list, and set adapter.
+        wordList.add("Word 1");
+        wordList.add("Word 2");
+        wordList.add("Word 3");
+        ListAdapter adt = new MyArrayAdapter(wordList);
+        ListView theList = findViewById(R.id.wordList);
         theList.setAdapter(adt);
-        //This listens for items being clicked in the list view
-        theList.setOnItemClickListener(( parent,  view,  position,  id) -> {
-            Log.e("you clicked on :" , "item "+ position);
 
-            numWords = 20;
-            ((MyArrayAdapter) adt).notifyDataSetChanged();
+        //Check if list was accessed by adding a word, if so, show Snackbar to confirm
+        int addCode = getIntent().getIntExtra("dictionary",0);
+        if(addCode != 0){
+            CoordinatorLayout cl = findViewById(R.id.savedWordsLayout);
+            Snackbar sb = Snackbar.make(cl,R.string.dictSnackbarText, Snackbar.LENGTH_INDEFINITE);
+            sb.setAction(R.string.dictSnackbarDismiss, e-> sb.dismiss());
+            sb.show();
+        }
+
+        //This listens for items being clicked in the list view
+        theList.setOnItemClickListener((list, item, position, id)->{
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString("word", wordList.get(position) );
+            dataToPass.putInt("position", position);
+            Intent nextActivity = new Intent(DictionarySavedWords.this, DictionaryWordDetail.class);
+            nextActivity.putExtras(dataToPass); //send data to next activity
+            startActivity(nextActivity); //make the transition
         });
     }
 
     //A copy of ArrayAdapter. You just give it an array and it will do the rest of the work.
     protected class MyArrayAdapter<E> extends BaseAdapter
     {
-        private List<E> dataCopy = null;
+        private List<E> dataCopy;
 
         //Keep a reference to the data:
-        public MyArrayAdapter(List<E> originalData)
+        MyArrayAdapter(List<E> originalData)
         {
             dataCopy = originalData;
         }
-
-        //You can give it an array
-        public MyArrayAdapter(E [] array)
-        {
-            dataCopy = Arrays.asList(array);
-        }
-
 
         //Tells the list how many elements to display:
         public int getCount()
         {
             return dataCopy.size();
         }
-
 
         public E getItem(int position){
             return dataCopy.get(position);

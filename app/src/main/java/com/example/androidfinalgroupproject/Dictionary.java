@@ -1,7 +1,6 @@
 package com.example.androidfinalgroupproject;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class Dictionary extends AppCompatActivity {
@@ -23,7 +22,7 @@ public class Dictionary extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary);
-        Toolbar tBar = (Toolbar)findViewById(R.id.my_toolbar);
+        Toolbar tBar = findViewById(R.id.my_toolbar);
         tBar.setTitle(R.string.dictionaryTitle);
         setSupportActionBar(tBar);
         tBar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite));
@@ -36,11 +35,17 @@ public class Dictionary extends AppCompatActivity {
             builder.setView( v );
             builder.setPositiveButton(R.string.positive, (dialog, which) -> {
                 Intent nextPage = new Intent(Dictionary.this, DictionarySavedWords.class);
+                nextPage.putExtra("dictionary", 1);
                 startActivity(nextPage);
             });
             builder.setNegativeButton(R.string.negative, (dialog, which) -> dialog.dismiss());
             builder.create().show();
         });
+        ProgressBar pb;
+        pb = findViewById(R.id.dictionaryProgress);
+        pb.setVisibility(View.VISIBLE);
+        pb.setProgress(50);
+
     }
 
     @Override

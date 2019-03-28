@@ -19,4 +19,6 @@
     <string name="positive">Yes</string>
     <string name="negative">No</string>
     <string name="savedWordsTitle">Saved Words</string>
+    <string name="dictSnackbarDismiss">Dismiss</string>
+    <string name="dictSnackbarText">Word Added!</string>
 </resources>

@@ -35,6 +35,13 @@
             android:layout_alignParentRight="true"
             android:text="@string/searchButton" />
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dictionaryProgress"
+            android:layout_below="@+id/searchButton"
+            style="?android:attr/progressBarStyleHorizontal"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
