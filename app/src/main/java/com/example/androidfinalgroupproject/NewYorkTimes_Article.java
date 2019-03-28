@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class NewYorkTimes_Article implements Serializable {
     String webUrl;
+    public static String id = "article";
 
     public String getWebUrl() {
         return webUrl;
