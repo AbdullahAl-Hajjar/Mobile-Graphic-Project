@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DictionaryInfo"></activity>
+        <activity android:name=".DictionarySavedWords"></activity>
+        <activity android:name=".DictionaryInfo" />
         <activity
             android:name=".NewYorktimes_ArticleActivity"
             android:theme="@style/AppTheme.NoActionBar" />

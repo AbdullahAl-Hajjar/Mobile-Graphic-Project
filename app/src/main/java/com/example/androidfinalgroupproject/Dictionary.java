@@ -35,7 +35,8 @@ public class Dictionary extends AppCompatActivity {
             View v = inflater.inflate(R.layout.custom_dialog, l);
             builder.setView( v );
             builder.setPositiveButton(R.string.positive, (dialog, which) -> {
-                dialog.dismiss();
+                Intent nextPage = new Intent(Dictionary.this, DictionarySavedWords.class);
+                startActivity(nextPage);
             });
             builder.setNegativeButton(R.string.negative, (dialog, which) -> dialog.dismiss());
             builder.create().show();

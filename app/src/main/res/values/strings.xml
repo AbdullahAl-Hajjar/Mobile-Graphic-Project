@@ -18,4 +18,5 @@
     <string name="saveWordPrompt">Would you like to save this word?</string>
     <string name="positive">Yes</string>
     <string name="negative">No</string>
+    <string name="savedWordsTitle">Saved Words</string>
 </resources>
