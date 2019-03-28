@@ -15,4 +15,7 @@
     <string name="dictionaryTitle">Dictionary</string>
     <string name="searchButton">Go</string>
     <string name="noSavedWords">No saved words to show!</string>
+    <string name="saveWordPrompt">Would you like to save this word?</string>
+    <string name="positive">Yes</string>
+    <string name="negative">No</string>
 </resources>
