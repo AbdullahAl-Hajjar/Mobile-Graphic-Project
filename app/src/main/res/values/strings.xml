@@ -13,4 +13,6 @@
     <string name="searchHint">Search for a word…</string>
     <string name="saveButton">Save</string>
     <string name="dictionaryTitle">Dictionary</string>
+    <string name="searchButton">Go</string>
+    <string name="noSavedWords">No saved words to show!</string>
 </resources>

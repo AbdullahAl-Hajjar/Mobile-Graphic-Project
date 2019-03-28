@@ -14,15 +14,26 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary" />
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/my_toolbar"
+            android:layout_toStartOf="@+id/searchButton"
+            android:layout_alignParentLeft="true"
             android:id="@+id/searchBar"
             android:hint="@string/searchHint"
             android:inputType="text" />
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/my_toolbar"
+            android:layout_alignParentRight="true"
+            android:text="@string/searchButton" />
 
         <Button
             android:layout_width="match_parent"
