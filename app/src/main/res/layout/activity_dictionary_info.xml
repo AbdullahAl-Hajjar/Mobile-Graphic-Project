@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,39 +7,60 @@
     android:orientation="vertical"
     tools:context=".DictionaryInfo">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dictionaryInfoTb"
+        android:background="@color/colorPrimary"/>
+
+
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="200dp"
+        android:id="@+id/infoIcon"
         android:src="@drawable/merriamwebster"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/infoIcon"
+        android:id="@+id/infoLine1"
         android:text="Merriam Webster Dictionary"
         android:textAlignment="center"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/infoLine1"
+        android:id="@+id/infoLine2"
         android:text="CST2335"
         android:textAlignment="center"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/infoLine2"
+        android:id="@+id/infoLine3"
         android:text="Mobile Graphical Interface Programming"
         android:textAlignment="center"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/infoLine3"
+        android:id="@+id/infoLine4"
         android:text="Author: Nick Hallarn"
         android:textAlignment="center"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/infoLine4"
+        android:id="@+id/infoLine5"
         android:text="March 28th, 2019"
         android:textAlignment="center"/>
 
-</LinearLayout>
+</RelativeLayout>
