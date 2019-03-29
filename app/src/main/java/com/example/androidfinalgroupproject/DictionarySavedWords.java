@@ -16,14 +16,32 @@ import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * This class is used to interact with the list of user saved words. This class extends
+ * AppCompatActivity. Current functionality is a placeholder to fulfill milestone 1 requirements.
+ *
+ * @author Nick Hallarn.
+ * @version 1.0.
+ */
 public class DictionarySavedWords extends AppCompatActivity {
+    /**
+     * ArrayList that holds the list of user saved words.
+     */
     ArrayList<String> wordList = new ArrayList<>();
 
+    /**
+     * This method initializes the DictionarySavedWords activity. The setContentView() method is
+     * used to define the layout resource to be used. Toolbar, wordList and ArrayAdapter are
+     * initialized. This activity checks to see if it was called by adding a new word, and if so,
+     * shows a Snackbar to confirm the addition. Click listener for the word list is also defined.
+     *
+     * @param savedInstanceState Bundle object containing activity's previously saved state. If
+     * activity is new, value will be null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_saved_words);
+        setContentView(R.layout.activity_dictionary_words);
         Toolbar toolbar = findViewById(R.id.savedWordsTb);
         toolbar.setTitle(R.string.savedWordsTitle);
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite));
@@ -40,7 +58,7 @@ public class DictionarySavedWords extends AppCompatActivity {
         wordList.add("Word 1");
         wordList.add("Word 2");
         wordList.add("Word 3");
-        ListAdapter adt = new MyArrayAdapter(wordList);
+        ListAdapter adt = new MyArrayAdapter<>(wordList);
         ListView theList = findViewById(R.id.wordList);
         theList.setAdapter(adt);
 
@@ -65,26 +83,60 @@ public class DictionarySavedWords extends AppCompatActivity {
     }
 
     //A copy of ArrayAdapter. You just give it an array and it will do the rest of the work.
+
+    /**
+     * This inner class extends BaseAdapter. It's purpose is to provide data to fill the saved words
+     * ListView.
+     *
+     * @param <E> Object type of ArrayList
+     */
     protected class MyArrayAdapter<E> extends BaseAdapter
     {
+        /**
+         * List object used to store a copy of the data passed to the adapter.
+         */
         private List<E> dataCopy;
 
-        //Keep a reference to the data:
+        /**
+         * Constructor method. Takes a list of objects and creates a duplicate list to work with.
+         *
+         * @param originalData List of objects to be used for ListView.
+         */
         MyArrayAdapter(List<E> originalData)
         {
             dataCopy = originalData;
         }
 
-        //Tells the list how many elements to display:
+        /**
+         * This method tells the list how many elements to display.
+         *
+         * @return Size of the ArrayList
+         */
         public int getCount()
         {
             return dataCopy.size();
         }
 
+        /**
+         * This method takes an integer index, and returns the item at the designated position in
+         * the list. Called in getView() function.
+         *
+         * @param position Index of requested item.
+         * @return Requested item.
+         */
         public E getItem(int position){
             return dataCopy.get(position);
         }
 
+        /**
+         * This method specifies how each row of the list will be displayed. Requires a
+         * LayoutInflater to load the required layout file.
+         *
+         * @param position Index of item to be displayed.
+         * @param old View used to recycle old views if possible.
+         * @param parent ViewGroup to inflate view into.
+         * @return The new TextView for the row.
+         */
         public View getView(int position, View old, ViewGroup parent)
         {
             //get an object to load a layout:
@@ -106,8 +158,12 @@ public class DictionarySavedWords extends AppCompatActivity {
             return root;
         }
 
-
-        //Return 0 for now. We will change this when using databases
+        /**
+         * Function used to return database ID if necessary. At this time, it is not implemented .
+         *
+         * @param position Index of requested item.
+         * @return No database in use, so return 0.
+         */
         public long getItemId(int position)
         {
             return 0;

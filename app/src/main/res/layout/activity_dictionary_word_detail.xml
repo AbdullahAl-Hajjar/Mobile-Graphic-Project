@@ -17,13 +17,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/wordDetailTb"
         android:id="@+id/wordText"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/wordText"
         android:id="@+id/wordPosition"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
 </RelativeLayout>

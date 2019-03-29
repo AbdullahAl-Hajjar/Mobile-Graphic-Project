@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/infoLine4"
         android:id="@+id/infoLine5"
-        android:text="March 28th, 2019"
+        android:text="Version 1.0 : March 28th, 2019"
         android:textAlignment="center"/>
 
 </RelativeLayout>
