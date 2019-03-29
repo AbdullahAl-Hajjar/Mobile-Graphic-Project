@@ -14,10 +14,11 @@
         <activity android:name=".DictionaryWordDetail"></activity>
         <activity android:name=".DictionarySavedWords" />
         <activity android:name=".DictionaryInfo" />
-        <activity
-            android:name=".NewYorktimes_ArticleActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".NewYorkTimes" />
+        <activity android:name=".NewYorktimes_ArticleActivity"
+            android:theme="@style/AppTheme.NoActionBar"  />
+        <activity android:name=".NewYorkTimes"
+            android:theme="@style/AppTheme.NoActionBar"  />
+
         <activity android:name=".Dictionary" />
         <activity android:name=".PlaneTracker" />
         <activity android:name=".NewsFeed" />
