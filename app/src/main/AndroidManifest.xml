@@ -10,7 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewYorkTimes"></activity>
+        <activity android:name=".NewYorktimes_ArticleActivity"
+            android:theme="@style/AppTheme.NoActionBar"  />
+        <activity android:name=".NewYorkTimes"
+            android:theme="@style/AppTheme.NoActionBar"  />
         <activity android:name=".Dictionary" />
         <activity android:name=".PlaneTracker" />
         <activity android:name=".NewsFeed" />
