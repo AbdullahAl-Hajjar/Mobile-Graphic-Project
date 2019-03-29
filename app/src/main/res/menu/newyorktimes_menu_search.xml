@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    <item android:id="@+id/action_search"
-        android:orderInCategory="5"
-        android:title="Search"
-        android:icon="@drawable/ic_menu_search"
-        app:showAsAction="always|collapseActionView"
-        app:actionViewClass="android.support.v7.widget.SearchView" />
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
 
     <item
-        android:id="@+id/action_filter"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
-        android:orderInCategory="5"
-        android:title="filter"
-        app:showAsAction="always|collapseActionView" />
+        android:id="@+id/info_details"
+
+        android:icon="@drawable/ic_menu_info_details"
+        android:orderInCategory="1"
+        android:title="Help"
+        app:showAsAction="always" />
 
 
 </menu>

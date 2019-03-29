@@ -12,12 +12,22 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
+/**
+ * This class NewYorkTimes_ArticleArrayAdapter is the activity to load the search results of articles into Listview.
+ * it will load the articles images with titles in the listview layout
+ */
 public class NewYorkTimes_ArticleArrayAdapter extends ArrayAdapter<NewYorkTimes_Article> {
-
+    /**
+     * This is the constructor of NewYorkTimes_ArticleArrayAdapter class
+     */
     public NewYorkTimes_ArticleArrayAdapter(Context context, List<NewYorkTimes_Article> articles) {
         super (context, android.R.layout.simple_list_item_1, articles);
     }
+
+    /**
+     * This getView method will inflate the layout newyorktimes_item_article_result with the results
+     * this method is using Picasso package to show the thumbnail results.
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         NewYorkTimes_Article article = this.getItem(position);

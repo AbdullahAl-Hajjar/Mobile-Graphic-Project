@@ -1,13 +1,11 @@
 <resources>
-    <string name="app_name">AndroidFinalGroupProject</string>
+    <string name="app_name">Android Final Group Project</string>
     <string name="title">DAILY WIT</string>
 
     <string name="action_about">About</string>
     <string name="hint">Enter search query</string>
     <string name="search">Search</string>
     <string name="title_activity_article">ArticleActivity</string>
-    <string name="empty_list">No Articles to show!</string>
-
     <string name="savedWords">View saved words</string>
     <string name="dictionaryInfo">Info</string>
     <string name="searchHint">Search for a word…</string>
