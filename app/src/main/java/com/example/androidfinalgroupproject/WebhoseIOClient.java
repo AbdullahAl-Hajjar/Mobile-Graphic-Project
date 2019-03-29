@@ -21,6 +21,7 @@ public class WebhoseIOClient extends AsyncTask<String, Integer, String> {
     private static final String WEBHOSE_BASE_URL = "http://webhose.io";
     private static WebhoseIOClient mClient;
     private String mApiKey;
+    private   ArrayList<String> items;
 
     public WebhoseIOClient() {
 
@@ -43,8 +44,10 @@ public class WebhoseIOClient extends AsyncTask<String, Integer, String> {
 
             jObject = new JSONObject(result);
 
-        } catch (Exception e) {
 
+
+        } catch (Exception e) {
+                e.printStackTrace();
         }
         return "Mission Acomplished";
     }
@@ -78,13 +81,27 @@ public class WebhoseIOClient extends AsyncTask<String, Integer, String> {
         super.onPostExecute(s);
     NewsFeed news = new NewsFeed();
     try {
-        news.setResult(jObject);
-        news.jsonList();
+        //news.setResult(jObject);
+       JSONArray postArray = jObject.getJSONArray("posts");
+        items = new ArrayList<>();
+        for (int i = 0; i < postArray.length(); i++)
+        {
+            items.add(postArray.get(i).toString());
+        }
+        setItems(items);
     }
     catch (Exception e)
     {
             e.printStackTrace();;
     }
 
+    }
+
+    public void setItems(ArrayList<String> items) {
+        this.items = items;
+    }
+
+    public ArrayList<String> getItems() {
+        return items;
     }
 }
