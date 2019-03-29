@@ -24,7 +24,7 @@ public class DictionaryInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary_info);
-
+        setTheme(R.style.DictionaryTheme);
         Toolbar toolbar = findViewById(R.id.dictionaryInfoTb);
         toolbar.setTitle(R.string.dictionaryTitle);
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite));

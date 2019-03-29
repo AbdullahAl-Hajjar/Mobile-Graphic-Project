@@ -11,18 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DictionaryWordDetail"></activity>
-        <activity android:name=".DictionarySavedWords" />
-        <activity android:name=".DictionaryInfo" />
+        <activity android:name=".DictionaryWordDetail"
+            android:theme="@style/AppTheme.NoActionBar"  />
+        <activity android:name=".DictionarySavedWords"
+            android:theme="@style/AppTheme.NoActionBar"  />
+        <activity android:name=".DictionaryInfo"
+            android:theme="@style/AppTheme.NoActionBar"  />
         <activity android:name=".NewYorktimes_ArticleActivity"
             android:theme="@style/AppTheme.NoActionBar"  />
         <activity android:name=".NewYorkTimes"
             android:theme="@style/AppTheme.NoActionBar"  />
 
-        <activity android:name=".Dictionary" />
+        <activity android:name=".Dictionary"
+            android:theme="@style/AppTheme.NoActionBar"  />
         <activity android:name=".PlaneTracker" />
         <activity android:name=".NewsFeed" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"  >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

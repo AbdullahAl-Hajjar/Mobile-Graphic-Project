@@ -42,6 +42,7 @@ public class DictionarySavedWords extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary_words);
+        setTheme(R.style.DictionaryTheme);
         Toolbar toolbar = findViewById(R.id.savedWordsTb);
         toolbar.setTitle(R.string.savedWordsTitle);
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite));

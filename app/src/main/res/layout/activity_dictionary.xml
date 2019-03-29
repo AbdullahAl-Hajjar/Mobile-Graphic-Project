@@ -25,6 +25,7 @@
             android:layout_alignParentStart="true"
             android:id="@+id/searchBar"
             android:hint="@string/searchHint"
+            android:backgroundTint="@color/colorAccentD"
             android:autofillHints="false"
             android:inputType="text" />
 

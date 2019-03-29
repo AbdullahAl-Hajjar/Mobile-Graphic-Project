@@ -36,6 +36,7 @@ public class Dictionary extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary);
+        setTheme(R.style.DictionaryTheme);
         setToolbar();
         createProgressBar();
         Button saveButton = findViewById(R.id.saveButton);
@@ -43,7 +44,7 @@ public class Dictionary extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             LayoutInflater inflater = this.getLayoutInflater();
             LinearLayout l = findViewById(R.id.customDialog);
-            View v = inflater.inflate(R.layout.custom_dialog, l);
+            View v = inflater.inflate(R.layout.dictionary_custom_dialog, l);
             builder.setView( v );
             builder.setPositiveButton(R.string.positive, (dialog, which) -> {
                 Intent nextPage = new Intent(Dictionary.this, DictionarySavedWords.class);
@@ -112,6 +113,9 @@ public class Dictionary extends AppCompatActivity {
      */
     private void createProgressBar(){
         ProgressBar pb = findViewById(R.id.dictionaryProgress);
+        pb.getProgressDrawable().setColorFilter(
+                getResources().getColor(R.color.colorAccentD),
+                android.graphics.PorterDuff.Mode.SRC_IN);
         pb.setVisibility(View.VISIBLE);
         pb.setProgress(50);
     }
