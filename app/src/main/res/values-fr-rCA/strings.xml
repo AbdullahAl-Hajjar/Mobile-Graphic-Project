@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Projet de groupe final Android</string>
+    <string name="title">DU QUOTIDIEN</string>
+    <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="action_about">environ</string>
+    <string name="hint">Entrez la requête de recherche</string>
+    <string name="search">Chercher</string>
+    <string name="title_activity_article">ArticleActivité</string>
+    <string name="savedWords">View saved words</string>
+    <string name="dictionaryInfo">Info</string>
+    <string name="searchHint">Search for a word…</string>
+    <string name="saveButton">Save</string>
+    <string name="dictionaryTitle">Dictionary</string>
+    <string name="searchButton">Go</string>
+    <string name="noSavedWords">No saved words to show!</string>
+    <string name="saveWordPrompt">Would you like to save this word?</string>
+    <string name="positive">Yes</string>
+    <string name="negative">No</string>
+    <string name="savedWordsTitle">Saved Words</string>
+    <string name="dictSnackbarDismiss">Dismiss</string>
+    <string name="dictSnackbarText">Word Added!</string>
+    <string name="article_confirm">Vous serez redirigé vers le site Web de NYTimes. D\'accord?</string>
+    <string name="nytimes_about3">Version 1: 29 mars 2019</string>
+    <string name="nytimes_about4">Développé par: Youssef Rizk</string>
+    <string name="nytimes_about5">Cette application est destinée à la recherche, à la lecture et à la sauvegarde d’articles du site Web du New York Times.</string>
+    <string name="nytimes_about6">"- Entrez votre recherche "</string>
+    <string name="nytimes_about7">"- Une liste d'articles correspondant à votre requête s'affichera "</string>
+    <string name="nytimes_about8">"- Cliquez sur un article et l'application vous redirigera vers le site Web de NYTimes pour le lire. "</string>
+    <string name="nytimes_about9">"- Cliquez sur le bouton ENREGISTRER pour enregistrer l'article sur votre appareil pour le visionner plus tard. "</string>
+    <string name="nytimes_about10">"- Cliquez sur Supprimer pour supprimer l'article de la liste des articles sauvegardés. "</string>
+    <string name="nytimes_welcome">Bienvenue sur NYTimes Article Search</string>
+    <string name="article_ok">D\'accord</string>
+    <string name="article_cancel">Annuler</string>
+    <string name="article_searching">Recherche d\'articles</string>
+</resources>

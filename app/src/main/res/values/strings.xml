@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Android Final Group Project</string>
     <string name="title">DAILY WIT</string>
-    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="action_about">About</string>
     <string name="hint">Enter search query</string>
     <string name="search">Search</string>
@@ -19,4 +19,19 @@
     <string name="savedWordsTitle">Saved Words</string>
     <string name="dictSnackbarDismiss">Dismiss</string>
     <string name="dictSnackbarText">Word Added!</string>
+    <string name="article_confirm">You will be redirected to NYTimes website. OK?</string>
+    <string name="nytimes_about1" translatable="false">The New York Times Article Search</string>
+    <string name="nytimes_about2" translatable="false">Mobile Graphical Interface Programming - CST2335</string>
+    <string name="nytimes_about3">Version 1 : March 29th, 2019</string>
+    <string name="nytimes_about4">Developed By: Youssef Rizk</string>
+    <string name="nytimes_about5">This application is for searching, reading and saving articles from New York Times website.</string>
+    <string name="nytimes_about6">- Enter your search query</string>
+    <string name="nytimes_about7">- A list of articles will be shown that match your query</string>
+    <string name="nytimes_about8">- Click on an article and the application will redirect you to NYTimes website to read it.</string>
+    <string name="nytimes_about9">- Click on SAVE button to save the article into your device for later viewing.</string>
+    <string name="nytimes_about10">- Click on delete to delete the article from the saved articles list.</string>
+    <string name="article_searching">Searching for Articles</string>
+    <string name="nytimes_welcome">Welcome to NYTimes Article Search</string>
+    <string name="article_ok">OK</string>
+    <string name="article_cancel">Cancel</string>
 </resources>
