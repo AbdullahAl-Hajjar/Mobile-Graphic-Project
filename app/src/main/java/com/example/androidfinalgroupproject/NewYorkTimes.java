@@ -76,7 +76,7 @@ public class NewYorkTimes extends AppCompatActivity {
         adapter = new NewYorkTimes_ArticleArrayAdapter(this, articles);
 
         gvResults.setAdapter(adapter);
-        sb = Snackbar.make(toolbar,"Welcome to NYTimes Article Search",Snackbar.LENGTH_LONG);
+        sb = Snackbar.make(toolbar,getResources().getString(R.string.nytimes_welcome),Snackbar.LENGTH_LONG);
         sb.show();
         gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -84,6 +84,14 @@ public class NewYorkTimes extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), NewYorktimes_ArticleActivity.class);
                 article = articles.get(position);
                 alertDialog();
+            }
+        });
+
+        gvResults.setOnScrollListener(new NewYorkTimes_EndlessScrollListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalItemsCount) {
+                loadMoreData(page);
+                return true; // ONLY if more data is actually being loaded; false otherwise.
             }
         });
 }
@@ -95,7 +103,7 @@ public class NewYorkTimes extends AppCompatActivity {
 
     private void loadMoreData(int offset) {
         String query = etQuery.getText().toString();
-        Toast.makeText(this, "Searching for Articles", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getResources().getString(R.string.article_searching), Toast.LENGTH_LONG).show();
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -138,7 +146,7 @@ public class NewYorkTimes extends AppCompatActivity {
         View middle = getLayoutInflater().inflate(R.layout.newyorktimes_custom_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getResources().getString(R.string.article_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // What to do on Accept
                                 intent.putExtra("article", article);
@@ -148,7 +156,7 @@ public class NewYorkTimes extends AppCompatActivity {
 
                 }).setView(middle)
 
-                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getResources().getString(R.string.article_cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // What to do on Cancel
                     }
