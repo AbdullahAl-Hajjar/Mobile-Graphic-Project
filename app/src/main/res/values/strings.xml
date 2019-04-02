@@ -6,6 +6,7 @@
     <string name="hint">Enter search query</string>
     <string name="search">Search</string>
     <string name="title_activity_article">ArticleActivity</string>
+
     <string name="savedWords">View saved words</string>
     <string name="dictionaryInfo">Info</string>
     <string name="searchHint">Search for a word…</string>
@@ -19,6 +20,13 @@
     <string name="savedWordsTitle">Saved Words</string>
     <string name="dictSnackbarDismiss">Dismiss</string>
     <string name="dictSnackbarText">Word Added!</string>
+    <string name="dInfo1">Merriam Webster Dictionary</string>
+    <string name="dInfo2">CST2335</string>
+    <string name="dInfo3">Mobile Graphical Interface Programming</string>
+    <string name="dInfo4">Author: Nick Hallarn</string>
+    <string name="dInfo5">Version 1.1 - April 1st, 2019</string>
+
+
     <string name="article_confirm">You will be redirected to NYTimes website. OK?</string>
     <string name="nytimes_about1" translatable="false">The New York Times Article Search</string>
     <string name="nytimes_about2" translatable="false">Mobile Graphical Interface Programming - CST2335</string>

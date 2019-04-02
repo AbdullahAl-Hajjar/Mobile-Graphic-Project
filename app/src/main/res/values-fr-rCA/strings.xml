@@ -6,6 +6,8 @@
     <string name="hint">Entrez la requête de recherche</string>
     <string name="search">Chercher</string>
     <string name="title_activity_article">ArticleActivité</string>
+
+
     <string name="savedWords">View saved words</string>
     <string name="dictionaryInfo">Info</string>
     <string name="searchHint">Search for a word…</string>
@@ -19,6 +21,12 @@
     <string name="savedWordsTitle">Saved Words</string>
     <string name="dictSnackbarDismiss">Dismiss</string>
     <string name="dictSnackbarText">Word Added!</string>
+    <string name="dInfo1">Merriam Webster Dictionary</string>
+    <string name="dInfo2">CST2335</string>
+    <string name="dInfo3">Mobile Graphical Interface Programming</string>
+    <string name="dInfo4">Author: Nick Hallarn</string>
+    <string name="dInfo5">Version 1.1 - April 1st, 2019</string>
+
     <string name="article_confirm">Vous serez redirigé vers le site Web de NYTimes. D\'accord?</string>
     <string name="nytimes_about3">Version 1: 29 mars 2019</string>
     <string name="nytimes_about4">Développé par: Youssef Rizk</string>

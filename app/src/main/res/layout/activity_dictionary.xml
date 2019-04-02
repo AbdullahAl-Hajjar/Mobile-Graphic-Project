@@ -18,6 +18,7 @@
             android:theme="@style/DictionaryTheme"
             android:background="?attr/colorPrimary" />
 
+        <!--Search Bar-->
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +30,7 @@
             android:backgroundTint="@color/colorAccentD"
             android:autofillHints="false"
             android:inputType="text" />
-
+        <!--Search Button-->
         <Button
             android:id="@+id/searchButton"
             android:layout_width="wrap_content"
@@ -45,6 +46,43 @@
             android:layout_below="@+id/searchButton"
             style="?android:attr/progressBarStyleHorizontal"/>
 
+        <!--HEADWORD-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/headWord"
+            android:layout_below="@id/dictionaryProgress"
+            android:textSize="40sp"
+            android:textColor="@color/colorTextNew"
+            android:text=""/>
+
+        <!--PRONUNCIATION-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pronunciation"
+            android:layout_below="@id/headWord"
+            android:textSize="20sp"
+            android:textColor="@color/colorTextNew"
+            android:textStyle="italic"/>
+
+        <!--WORD TYPE-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/wordType"
+            android:layout_below="@id/pronunciation"
+            android:textSize="20sp"/>
+
+        <!--DEFINITION-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/definition"
+            android:layout_below="@+id/wordType"
+            android:textSize="20sp"/>
+
+        <!--Save Button-->
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
