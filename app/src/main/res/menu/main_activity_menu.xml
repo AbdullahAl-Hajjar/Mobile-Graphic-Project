@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <item
+        android:id="@+id/dictionaryButton"
+        android:icon="@drawable/merriamwebster"
+        android:orderInCategory="1"
+        android:title="dictionary"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/newsFeedButton"
+        android:icon="@drawable/ressnews2"
+        android:orderInCategory="2"
+        android:title="newsFeed"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/newYorkButton"
+        android:icon="@drawable/nytimes3"
+        android:orderInCategory="3"
+        android:title="newYork"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/airplaneButton"
+        android:icon="@drawable/paperplane2"
+        android:orderInCategory="4"
+        android:title="airplane"
+        app:showAsAction="always" />
+
+
+</menu>
