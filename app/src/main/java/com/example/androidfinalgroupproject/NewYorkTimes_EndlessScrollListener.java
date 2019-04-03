@@ -1,13 +1,14 @@
 package com.example.androidfinalgroupproject;
 
 import android.widget.AbsListView;
+
 /**
  * This class NewYorkTimes_EndlessScrollListener is the activity to scroll the article lists endlessly
  */
 public abstract class NewYorkTimes_EndlessScrollListener implements AbsListView.OnScrollListener {
     /**
      * The minimum number of items to have below your current scroll position
-     *      before loading more.
+     * before loading more.
      */
     private int visibleThreshold = 5;
     // The current offset index of data you have loaded
@@ -34,17 +35,18 @@ public abstract class NewYorkTimes_EndlessScrollListener implements AbsListView.
 
 
     @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-    {
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         /**
          * If the total item count is zero and the previous isn't, assume the
          *  list is invalidated and should be reset back to initial state
-          */
+         */
 
         if (totalItemCount < previousTotalItemCount) {
             this.currentPage = this.startingPageIndex;
             this.previousTotalItemCount = totalItemCount;
-            if (totalItemCount == 0) { this.loading = true; }
+            if (totalItemCount == 0) {
+                this.loading = true;
+            }
         }
         /**
          *   If it's still loading, we check to see if the dataset count has
@@ -63,14 +65,15 @@ public abstract class NewYorkTimes_EndlessScrollListener implements AbsListView.
          *          the visibleThreshold and need to reload more data.
          *          If we do need to reload some more data, we execute onLoadMore to fetch the data.
          */
-        if (!loading && (firstVisibleItem + visibleItemCount + visibleThreshold) >= totalItemCount ) {
+        if (!loading && (firstVisibleItem + visibleItemCount + visibleThreshold) >= totalItemCount) {
             loading = onLoadMore(currentPage + 1, totalItemCount);
         }
     }
 
     /**
-     *  Defines the process for actually loading more data based on page
-     *      Returns true if more data is being loaded; returns false if there is no more data to load.
+     * Defines the process for actually loading more data based on page
+     * Returns true if more data is being loaded; returns false if there is no more data to load.
+     *
      * @param page
      * @param totalItemsCount
      * @return

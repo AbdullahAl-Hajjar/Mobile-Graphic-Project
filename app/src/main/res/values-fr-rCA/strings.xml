@@ -27,9 +27,13 @@
     <string name="nytimes_about7">"- Une liste d'articles correspondant à votre requête s'affichera "</string>
     <string name="nytimes_about8">"- Cliquez sur un article et l'application vous redirigera vers le site Web de NYTimes pour le lire. "</string>
     <string name="nytimes_about9">"- Cliquez sur le bouton ENREGISTRER pour enregistrer l'article sur votre appareil pour le visionner plus tard. "</string>
-    <string name="nytimes_about10">"- Cliquez sur Supprimer pour supprimer l'article de la liste des articles sauvegardés. "</string>
+    <string name="nytimes_about10">- Cliquez sur SAUVEGARDE pour accéder à votre liste d\'articles sauvegardés, puis appuyez sur SUPPRIMER pour supprimer l\'article de la liste.</string>
     <string name="nytimes_welcome">Bienvenue sur NYTimes Article Search</string>
     <string name="article_ok">D\'accord</string>
     <string name="article_cancel">Annuler</string>
     <string name="article_searching">Recherche d\'articles</string>
+    <string name="delete_button">Effacer</string>
+    <string name="savedArticles">Liste sauvegardée</string>
+    <string name="article_saving">L\'article est enregistré</string>
+    <string name="title1">CST2335 Graphical Interface Programming Projet de groupe final</string>
 </resources>
