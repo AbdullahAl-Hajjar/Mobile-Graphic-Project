@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">AndroidFinalGroupProject</string>
     <string name="title">DAILY WIT</string>
+    <string name="searchFlightsButton">Search Flights</string>
+    <string name="depAprt">Departure Airport</string>
+    <string name="arrAprt">Arrival Airport</string>
+    <string name="airportHint">Enter three letter airport code</string>
+    <string name="newSearchButton">New Search</string>
+    <string name="search">Search</string>
+    <string name="programTitle">Flight Status Tracker      </string>
+    <string name="delete">Delete</string>
 </resources>

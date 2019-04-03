@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="25sp">
+    >
+
+    <RelativeLayout
+        android:id="@+id/travelImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="flightimg"
+            android:paddingTop="18dp"
+            android:src="@drawable/plane" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/programDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/travelImage"
+        >
+
+
+        <TextView
+            android:id="@+id/currentTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/weatherImage"
+            android:layout_alignParentBottom="false"
+            android:layout_centerHorizontal="false" />
+
+        <TextView
+            android:id="@+id/minTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/currentTemp"
+            android:layout_alignParentBottom="false"
+            android:layout_centerHorizontal="false" />
+
+        <TextView
+            android:id="@+id/maxTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/minTemp"
+            android:layout_alignParentBottom="false"
+            android:layout_centerHorizontal="false" />
+
+        <TextView
+            android:id="@+id/uvRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/maxTemp"
+            android:layout_alignParentBottom="false"
+            android:layout_centerHorizontal="false" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uvRating"
+            android:layout_centerHorizontal="false"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+</RelativeLayout>

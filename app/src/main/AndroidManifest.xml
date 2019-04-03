@@ -8,8 +8,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".NewYorkTimes"></activity>
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".FTAbout"></activity>
+        <activity android:name=".FlightTrackerResults" />
+        <activity android:name=".FlightTrackerSaved" />
+        <activity android:name=".NewYorkTimes" />
         <activity android:name=".Dictionary" />
         <activity android:name=".PlaneTracker" />
         <activity android:name=".NewsFeed" />

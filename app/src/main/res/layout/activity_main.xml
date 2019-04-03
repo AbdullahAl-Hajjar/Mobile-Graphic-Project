@@ -55,5 +55,7 @@
         android:layout_toRightOf="@id/dictionaryButton"
         android:layout_below="@id/dictionaryButton"
         android:layout_marginLeft="10dp"
+
+
 />
 </RelativeLayout>
