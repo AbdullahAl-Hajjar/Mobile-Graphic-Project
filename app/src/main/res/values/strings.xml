@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Android Final Group Project</string>
     <string name="title">DAILY WIT</string>
+
     <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="action_about">About</string>
     <string name="hint">Enter search query</string>
@@ -34,4 +35,5 @@
     <string name="nytimes_welcome">Welcome to NYTimes Article Search</string>
     <string name="article_ok">OK</string>
     <string name="article_cancel">Cancel</string>
+
 </resources>
