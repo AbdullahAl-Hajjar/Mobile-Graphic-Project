@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/flightTrackerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".PlaneTracker">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <include layout="@layout/flight_tracker_toolbar"/>
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/flightImage"
+        android:layout_width="match_parent"
+        android:layout_height="202dp"
+        android:layout_marginTop="@android:dimen/app_icon_size"
+
+        app:srcCompat="@drawable/travel" />
+
+
+    <Button
+        android:id="@+id/searchBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/flightImage"
+        android:layout_marginLeft="0dp"
+        android:text="@string/newSearchButton" />
+
+    <TextView
+        android:id="@+id/blankTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchBtn"
+        android:padding="14dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/blankTV"
+        android:visibility="invisible" />
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="25sp">
+   >
+
+    <RelativeLayout
+        android:id="@+id/travelImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="flightimg"
+            android:paddingTop="18dp"
+            android:src="@drawable/paperplane2" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/programDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/travelImage"
+        >
+
+
+        <TextView
+            android:id="@+id/programDetails1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CST2335 - Mobile Graphical Interface Programming"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:padding="12dp"/>
+
+        <TextView
+
+            android:id="@+id/programDetails2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/programDetails1"
+            android:text="Program Name: Flight Status Tracker" />
+
+
+        <TextView
+            android:id="@+id/programDetails3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Version Number: 1"
+            android:layout_below="@+id/programDetails2"
+
+            />
+
+        <TextView
+            android:id="@+id/programDetails4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Developed by: Amanda Turton"
+
+            android:layout_below="@+id/programDetails3"
+            />
+
+
+        <TextView
+            android:id="@+id/programDetails5"
+            android:padding="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/programDetails4"
+            android:text="The Flight Status Tracker application is designed to allow the user to search a public API by departure or arrival airport to gather details on the location, speed, altitude, and status of a flight of their choosing."
+            />
+        <TextView
+            android:id="@+id/programDetails6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/programDetails5"
+            android:text="FILL IN MORE DETAILS HERE" />
+
+        <TextView
+            android:id="@+id/programDetails7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            android:layout_below="@+id/programDetails6"
+            android:text="FILL IN MORE DETAILS HERE" />
+
+        <TextView
+            android:id="@+id/programDetails8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            android:layout_below="@+id/programDetails7"
+            android:text="FILL IN MORE DETAILS HERE" />
+
+    </RelativeLayout>
+</RelativeLayout>
