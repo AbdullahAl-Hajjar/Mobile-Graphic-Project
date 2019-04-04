@@ -15,10 +15,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +48,23 @@ public class Dictionary extends AppCompatActivity {
 
     private ProgressBar pb;
     private String searchTerm;
+    private EditText searchBar;
+    private TextView hw;
+    private TextView pr;
+    private TextView sg;
+    private TextView dt;
+    private TextView wt;
+    private boolean notFound =false;
+    private ListView theList;
 
+    List<String> headWord = new ArrayList<>();      //<hw>
+    List<String> pronunciation = new ArrayList<>(); //<pr>
+    List<String> wordType = new ArrayList<>();      //<fl>
+    List<String> inflections = new ArrayList<>();   //<if>
+    List<String> senseNumber = new ArrayList<>();   //<sn>
+    List<String> definition = new ArrayList<>();    //<dt>
+    List<String> references = new ArrayList<>();    //<sx>
+    List<String> suggestions = new ArrayList<>();   //<suggestion>
 
 
     /**
@@ -64,22 +84,23 @@ public class Dictionary extends AppCompatActivity {
         createProgressBar();
         Button saveButton = findViewById(R.id.saveButton);
         Button searchButton = findViewById(R.id.searchButton);
-        EditText searchBar = findViewById(R.id.searchBar);
+        searchBar = findViewById(R.id.searchBar);
+        theList = findViewById(R.id.dict_sugg_list);
+        hw = findViewById(R.id.headWord);
+        pr = findViewById(R.id.pronunciation);
+        wt = findViewById(R.id.wordType);
+        dt = findViewById(R.id.definition);
+        sg = findViewById(R.id.suggestTitle);
+
+
+
 
         searchButton.setOnClickListener(btn -> {
-            View v = this.getCurrentFocus();
-            InputMethodManager mm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            mm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-            try {
-                searchTerm = searchBar.getText().toString().trim();
-                String param = URLEncoder.encode(searchTerm, "UTF-8");
-                DataFetcher networkThread = new DataFetcher();
-                networkThread.execute("https://www.dictionaryapi.com/api/v1/references/sd3/xml/" + param
-                        + "?key=4556541c-b8ed-4674-9620-b6cba447184f");
-            }catch(Exception e){
-                Log.e("Program crashed", e.getMessage());
-            }
+            clearFields();
+            searchTerm = searchBar.getText().toString().trim();
+            search(searchTerm);
         });
+
 
 
         saveButton.setOnClickListener(btn -> {
@@ -96,6 +117,34 @@ public class Dictionary extends AppCompatActivity {
             builder.setNegativeButton(R.string.negative, (dialog, which) -> dialog.dismiss());
             builder.create().show();
         });
+    }
+
+    public void search(String term){
+        View v = this.getCurrentFocus();
+        InputMethodManager mm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        headWord.clear();
+        pronunciation.clear();
+        wordType.clear();
+        definition.clear();
+        suggestions.clear();
+        try {
+            if(v != null)
+                mm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            String param = URLEncoder.encode(term, "UTF-8");
+            DataFetcher networkThread = new DataFetcher();
+            networkThread.execute("https://www.dictionaryapi.com/api/v1/references/sd3/xml/" + param
+                    + "?key=4556541c-b8ed-4674-9620-b6cba447184f");
+        }catch(Exception e){
+            Log.e("Program crashed", e.getMessage());
+        }
+    }
+
+    public void clearFields(){
+        searchTerm = "";
+        hw.setText("");
+        pr.setText("");
+        dt.setText("");
+        wt.setText("");
     }
 
     /**
@@ -156,20 +205,14 @@ public class Dictionary extends AppCompatActivity {
     private void createProgressBar(){
         pb = findViewById(R.id.dictionaryProgress);
         pb.getProgressDrawable().setColorFilter(
-                getResources().getColor(R.color.colorAccentD),
+                ContextCompat.getColor(this, R.color.colorAccentD),
                 android.graphics.PorterDuff.Mode.SRC_IN);
         pb.setVisibility(View.INVISIBLE);
     }
 
     private class DataFetcher extends AsyncTask<String, Integer, String> {
 
-        List<String> headWord = new ArrayList<>();      //<hw>
-        List<String> pronunciation = new ArrayList<>(); //<pr>
-        List<String> wordType = new ArrayList<>();      //<fl>
-        List<String> inflections = new ArrayList<>();   //<if>
-        List<String> senseNumber = new ArrayList<>();   //<sn>
-        List<String> definition = new ArrayList<>();    //<dt>
-        List<String> references = new ArrayList<>();    //<sx>
+
 
         @Override
         protected String doInBackground(String... strings) {
@@ -201,38 +244,43 @@ public class Dictionary extends AppCompatActivity {
                                 break;
                             case "fl":
 
-                                wordType.add(pp.getAttributeValue(null, "fl"));
+                                wordType.add(pp.nextText());
                                 publishProgress(30);
 
                                 break;
                             case "if":
 
-                                inflections.add(pp.getAttributeValue(null, "if"));
+                                inflections.add(pp.nextText());
                                 publishProgress(40);
 
                                 break;
                             case "sn":
 
-                                senseNumber.add(pp.getAttributeValue(null, "sn"));
+                                senseNumber.add(pp.nextText());
                                 publishProgress(60);
 
                                 break;
                             case "dt":
 
-                                definition.add(pp.getAttributeValue(null, "dt"));
+                                definition.add(pp.nextText());
                                 publishProgress(75);
-                                references.add(pp.getAttributeValue(null, "sx"));
-                                publishProgress(100);
 
+
+                                break;
+                            case "suggestion":
+                                suggestions.add(pp.nextText());
+                                notFound = true;
                                 break;
                         }
                     }
                     pp.next();
                 }
+                publishProgress(100);
                 i.close();
 
+
             }catch(Exception e){
-                Log.e("Program crashed", e.getStackTrace().toString());
+                Log.e("Program crashed", e.getMessage());
             }
             return "Finished Task";
         }
@@ -243,9 +291,43 @@ public class Dictionary extends AppCompatActivity {
             pb.setVisibility(View.INVISIBLE);
             TextView hw = findViewById(R.id.headWord);
             TextView pr = findViewById(R.id.pronunciation);
+            TextView wt = findViewById(R.id.wordType);
+            TextView df = findViewById(R.id.definition);
+            if (!headWord.isEmpty()) {
+                notFound=false;
+                sg.setVisibility(View.INVISIBLE);
+                theList.setVisibility(View.INVISIBLE);
+                hw.setText(headWord.get(0));
 
-            hw.setText(headWord.get(0));
-            pr.setText(pronunciation.get(0));
+                if (!pronunciation.isEmpty()) {
+                    pr.setText(pronunciation.get(0));
+                }
+                if (!wordType.isEmpty()) {
+                    wt.setText(wordType.get(0));
+                }
+                if (!definition.isEmpty()) {
+                    df.setText(definition.get(0));
+                }
+
+            }else {
+                hw.setText(R.string.wordNotFound);
+                pr.setText("");
+                wt.setText("");
+                df.setText("");
+                sg.setVisibility(View.VISIBLE);
+                theList.setVisibility(View.VISIBLE);
+                if (notFound) {
+                    ListAdapter adt = new MyArrayAdapter<>(suggestions);
+                    ListView theList = findViewById(R.id.dict_sugg_list);
+                    theList.setAdapter(adt);
+                    theList.setOnItemClickListener(( parent,  view,  position,  id) -> {
+                        search(suggestions.get(position));
+                        ((MyArrayAdapter) adt).notifyDataSetChanged();
+                    });
+                }
+            }
+
+
         }
 
         @Override
@@ -253,6 +335,46 @@ public class Dictionary extends AppCompatActivity {
             super.onProgressUpdate(values);
             pb.setVisibility(View.VISIBLE);
             pb.setProgress(values[0]);
+        }
+    }
+
+    protected class MyArrayAdapter<E> extends BaseAdapter
+    {
+        private List<E> dataCopy;
+
+        MyArrayAdapter(List<E> originalData)
+        {
+            dataCopy = originalData;
+        }
+
+        public int getCount()
+        {
+            return dataCopy.size();
+        }
+
+
+        public E getItem(int position){
+            return dataCopy.get(position);
+        }
+
+        public View getView(int position, View old, ViewGroup parent)
+        {
+            LayoutInflater inflater = getLayoutInflater();
+            View root = old;
+            if (old == null)
+                root = inflater.inflate(R.layout.dictionary_single_row, parent, false);
+
+            TextView tv = root.findViewById(R.id.textOnRow);
+            tv.setText(suggestions.get(position));
+            return root;
+        }
+
+
+        //Return 0 for now. We will change this when using databases
+        public long getItemId(int position)
+        {
+            return   0;
+            //adt.getItemId(position);
         }
     }
 }

@@ -8,23 +8,26 @@
     <string name="title_activity_article">ArticleActivité</string>
 
 
-    <string name="savedWords">View saved words</string>
+    <string name="savedWords">Mots sauvegardés</string>
     <string name="dictionaryInfo">Info</string>
-    <string name="searchHint">Search for a word…</string>
-    <string name="saveButton">Save</string>
-    <string name="dictionaryTitle">Dictionary</string>
-    <string name="searchButton">Go</string>
-    <string name="noSavedWords">No saved words to show!</string>
-    <string name="saveWordPrompt">Would you like to save this word?</string>
-    <string name="positive">Yes</string>
-    <string name="negative">No</string>
-    <string name="savedWordsTitle">Saved Words</string>
-    <string name="dictSnackbarDismiss">Dismiss</string>
-    <string name="dictSnackbarText">Word Added!</string>
-    <string name="dInfo1">Merriam Webster Dictionary</string>
+    <string name="searchHint">Rechercher un mot…</string>
+    <string name="saveButton">sauvegarder</string>
+    <string name="dictionaryTitle">dictionnaire</string>
+    <string name="searchButton">Aller</string>
+    <string name="noSavedWords">Pas de mots sauvegardés à afficher!</string>
+    <string name="saveWordPrompt">Voulez-vous sauvegarder ce mot?</string>
+    <string name="positive">Oui</string>
+    <string name="negative">Non</string>
+    <string name="savedWordsTitle">Mots Sauvegardés</string>
+    <string name="dictSnackbarDismiss">Rejeter</string>
+    <string name="dictSnackbarText">Mot ajouté</string>
+    <string name="wordNotFound">Mot non trouvé…</string>
+    <string name="suggestTitle">Suggestions:</string>
+    <string name="noSuggestions">Pas de suggestions</string>
+    <string name="dInfo1">Dictionnaire Webster Merriam</string>
     <string name="dInfo2">CST2335</string>
-    <string name="dInfo3">Mobile Graphical Interface Programming</string>
-    <string name="dInfo4">Author: Nick Hallarn</string>
+    <string name="dInfo3">Programmation d\'interface graphique mobile</string>
+    <string name="dInfo4">Auteur: Nick Hallarn</string>
     <string name="dInfo5">Version 1.1 - April 1st, 2019</string>
 
     <string name="article_confirm">Vous serez redirigé vers le site Web de NYTimes. D\'accord?</string>

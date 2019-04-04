@@ -20,6 +20,9 @@
     <string name="savedWordsTitle">Saved Words</string>
     <string name="dictSnackbarDismiss">Dismiss</string>
     <string name="dictSnackbarText">Word Added!</string>
+    <string name="wordNotFound">Word not found…</string>
+    <string name="suggestTitle">Suggestions:</string>
+    <string name="noSuggestions">No suggestions</string>
     <string name="dInfo1">Merriam Webster Dictionary</string>
     <string name="dInfo2">CST2335</string>
     <string name="dInfo3">Mobile Graphical Interface Programming</string>
