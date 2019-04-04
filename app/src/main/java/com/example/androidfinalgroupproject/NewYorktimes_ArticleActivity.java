@@ -23,6 +23,7 @@ import java.util.ArrayList;
  * This class extends AppCompatActivity.
  */
 class NewYorkTimes_ArticleActivity extends AppCompatActivity {
+    //
     /**
      * dbOpener variable is an instance of NewYorkTimes_MyDatabaseOpenHelper to access the database
      * db is an instance of SQLiteDatabase to execute the database
