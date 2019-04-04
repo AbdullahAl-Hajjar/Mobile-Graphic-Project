@@ -26,6 +26,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -120,6 +122,11 @@ public class NewYorkTimes extends AppCompatActivity {
 
     private void loadMoreData(int offset) {
         query = etQuery.getText().toString();
+        try {
+            URLEncoder.encode(query, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         Toast.makeText(this, getResources().getString(R.string.article_searching), Toast.LENGTH_LONG).show();
         client = new AsyncHttpClient();
         params = new RequestParams();
