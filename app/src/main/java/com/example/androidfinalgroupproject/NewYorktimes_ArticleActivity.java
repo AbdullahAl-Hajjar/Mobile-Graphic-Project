@@ -22,8 +22,7 @@ import java.util.ArrayList;
  * The NewYorkTimes_ArticleActivity class is the activity opening NYTimes website link to read the article.
  * This class extends AppCompatActivity.
  */
-class NewYorkTimes_ArticleActivity extends AppCompatActivity {
-    //
+public class NewYorkTimes_ArticleActivity extends AppCompatActivity {
     /**
      * dbOpener variable is an instance of NewYorkTimes_MyDatabaseOpenHelper to access the database
      * db is an instance of SQLiteDatabase to execute the database
