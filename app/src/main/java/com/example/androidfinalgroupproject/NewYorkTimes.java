@@ -1,33 +1,37 @@
 package com.example.androidfinalgroupproject;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
+
 /**
  * The NewYorkTimes class is the main activity of the application. This class extends AppCompatActivity.
  *
@@ -45,19 +49,25 @@ public class NewYorkTimes extends AppCompatActivity {
      * url variable is static finalString variable of nytimes.com website for article search
      * API_KEY variable is static final String variable of the API KEY belong to me.
      * sb variable is the Snackbar variable that display a Welcome snackbar message upon lunching the application
-     * intent is an Intent variable to load NewYorktimes_ArticleActivity activity when an article title clicked.
+     * intent is an Intent variable to load NewYorkTimes_ArticleActivity activity when an article title clicked.
      * article variable is NewYorkTimes_Article object that will be used when an article title clicked to load the article
      */
     ProgressBar progressBar;
     EditText etQuery;
     ListView gvResults;
     ArrayList<NewYorkTimes_Article> articles;
+    Button saved_list;
     NewYorkTimes_ArticleArrayAdapter adapter;
     private static final String url = "http://api.nytimes.com/svc/search/v2/articlesearch.json";
     private static final String API_KEY = "nGhORsp4W6LhNZnA1DtcYdeVv2Kp0l8r";
     Snackbar sb;
     Intent intent;
     NewYorkTimes_Article article;
+    SharedPreferences sp;
+    Intent saved_List_Intent;
+    AsyncHttpClient client;
+    String query;
+    RequestParams params;
 
     /**
      * This method initializes the NewYorkTimes activity.
@@ -69,19 +79,23 @@ public class NewYorkTimes extends AppCompatActivity {
         setContentView(R.layout.newyorktimes_activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_search_activity);
         etQuery = (EditText) findViewById(R.id.etQuery);
+        saved_list = (Button) findViewById(R.id.savedArticles);
         gvResults = (ListView) findViewById(R.id.gvResults);
+        sp = getSharedPreferences("searchQuery", Context.MODE_PRIVATE);
+        String searchText = sp.getString("searchQuery", "");
+        etQuery.setText(searchText);
         progressBar = findViewById(R.id.progressBar);
         articles = new ArrayList<>();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         adapter = new NewYorkTimes_ArticleArrayAdapter(this, articles);
-
+        saved_List_Intent = new Intent(NewYorkTimes.this, NewYorkTimes_SavedArticles.class);
         gvResults.setAdapter(adapter);
-        sb = Snackbar.make(toolbar,getResources().getString(R.string.nytimes_welcome),Snackbar.LENGTH_LONG);
+        sb = Snackbar.make(toolbar, getResources().getString(R.string.nytimes_welcome), Snackbar.LENGTH_LONG);
         sb.show();
         gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intent = new Intent(getApplicationContext(), NewYorktimes_ArticleActivity.class);
+                intent = new Intent(getApplicationContext(), NewYorkTimes_ArticleActivity.class);
                 article = articles.get(position);
                 alertDialog();
             }
@@ -94,7 +108,12 @@ public class NewYorkTimes extends AppCompatActivity {
                 return true; // ONLY if more data is actually being loaded; false otherwise.
             }
         });
-}
+
+        saved_list.setOnClickListener(btn -> {
+            startActivity(saved_List_Intent);
+
+        });
+    }
 
     /**
      * This method define the search of articles and retrieving them from the API using AsyncHttpClient and JSON object.
@@ -102,15 +121,19 @@ public class NewYorkTimes extends AppCompatActivity {
      */
 
     private void loadMoreData(int offset) {
-        String query = etQuery.getText().toString();
+        query = etQuery.getText().toString();
+        try {
+            URLEncoder.encode(query, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         Toast.makeText(this, getResources().getString(R.string.article_searching), Toast.LENGTH_LONG).show();
-
-        AsyncHttpClient client = new AsyncHttpClient();
-        RequestParams params = new RequestParams();
+        client = new AsyncHttpClient();
+        params = new RequestParams();
         params.put("api-key", API_KEY);
         params.put("q", query);
         params.put("page", offset);
-        client.get(url, params, new JsonHttpResponseHandler()  {
+        client.get(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray articleJsonResults = null;
@@ -119,17 +142,18 @@ public class NewYorkTimes extends AppCompatActivity {
                     progressBar.setVisibility(View.INVISIBLE);
                     adapter.addAll(NewYorkTimes_Article.fromJSONArray(articleJsonResults));
 
-                } catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        } );
+        });
 
         progressBar.setVisibility(View.VISIBLE);
+
     }
+
     /**
      * This method is used when Search button is clicked to call loadMoreData() method and make the search and get the articles from the API
-     *
      */
     public void onArticleSearch(View view) {
         adapter.clear();
@@ -141,17 +165,16 @@ public class NewYorkTimes extends AppCompatActivity {
      * if user press on OK then it will redirect to NYTimes website and open the article
      * if user press on Cancel then it will go back to articles list.
      */
-    public void alertDialog()
-    {
+    public void alertDialog() {
         View middle = getLayoutInflater().inflate(R.layout.newyorktimes_custom_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("")
                 .setPositiveButton(getResources().getString(R.string.article_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // What to do on Accept
-                                intent.putExtra("article", article);
-                                startActivity(intent);
-                                progressBar.setVisibility(View.VISIBLE);
+                        intent.putExtra("article", article);
+                        startActivity(intent);
+                        progressBar.setVisibility(View.VISIBLE);
                     }
 
                 }).setView(middle)
@@ -172,6 +195,15 @@ public class NewYorkTimes extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.INVISIBLE);
-    }
-}
 
+    }
+
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString("searchQuery", etQuery.getText().toString());
+        edit.commit();
+    }
+
+
+}
