@@ -40,5 +40,6 @@
     <string name="article_saving">Article is Saved</string>
     <string name="delete">Delete</string>
     <string name="newSearchButton">Search</string>
+    <string name="newsfeedsearch">Search</string>
 
 </resources>
