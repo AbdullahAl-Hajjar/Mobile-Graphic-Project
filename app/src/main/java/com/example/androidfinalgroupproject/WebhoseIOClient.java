@@ -37,9 +37,14 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -65,6 +70,7 @@ public class WebhoseIOClient extends AsyncTask<String, Integer, String> {
      * This  Stores the item from te JSONarray
      */
     private ArrayList<String> items;
+    private  WebhoseIOClient web;
 
     public WebhoseIOClient() {
 
@@ -123,8 +129,10 @@ public class WebhoseIOClient extends AsyncTask<String, Integer, String> {
         /**
          * Builds the URL
          */
-
-        String builder = String.format("%s/%s?token=%s&format=json&q=%s&language=english", WEBHOSE_BASE_URL, endpoint, mApiKey, queries);
+      //  http://webhose.io/filterWebContent?token=134a79ef-4a76-48e8-a627-fc9240845d29&format=json&sort=relevancy&q=stock%20market%20language%3Aenglish
+        String builder = String.format("%s/%s?token=%s&format=json&sort=relevancy&q=%s&language=english", WEBHOSE_BASE_URL, endpoint, mApiKey, queries);
+        web = new WebhoseIOClient();
+        web.execute(builder);
         execute(builder);
 
     }
@@ -136,8 +144,11 @@ public class WebhoseIOClient extends AsyncTask<String, Integer, String> {
         return jObject;
     }
 
+
+
     @Override
-    protected void onPostExecute(String s) {
+    protected void onPostExecute(String s)
+    {
 
         /**
          * Stores the JSONobject into The JSONarray
@@ -145,11 +156,12 @@ public class WebhoseIOClient extends AsyncTask<String, Integer, String> {
         super.onPostExecute(s);
         NewsFeed news = new NewsFeed();
         try {
-            //news.setResult(jObject);
+
             JSONArray postArray = jObject.getJSONArray("posts");
             items = new ArrayList<>();
             for (int i = 0; i < postArray.length(); i++) {
-                items.add(postArray.get(i).toString());
+if(postArray.getJSONObject(i).getString("title").isEmpty()) {
+}else{items.add(postArray.getJSONObject(i).getString("title"));}
             }
             setItems(items);
         } catch (Exception e) {
@@ -158,6 +170,8 @@ public class WebhoseIOClient extends AsyncTask<String, Integer, String> {
         }
 
     }
+
+
 
     public void setItems(ArrayList<String> items) {
         /**

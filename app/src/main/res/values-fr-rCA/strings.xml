@@ -58,4 +58,5 @@
     <string name="title1">CST2335 Graphical Interface Programming Projet de groupe final</string>
     <string name="delete">Effacer</string>
     <string name="newSearchButton">Chercher</string>
+    <string name="newsfeedsearch">Chercher</string>
 </resources>

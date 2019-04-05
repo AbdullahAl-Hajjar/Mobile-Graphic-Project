@@ -27,6 +27,7 @@ package com.example.androidfinalgroupproject;
  * SOFTWARE.
  */
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -35,12 +36,18 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -51,6 +58,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class NewsFeed extends AppCompatActivity {
@@ -85,7 +93,7 @@ public class NewsFeed extends AppCompatActivity {
     /**
      * Button object from the newsfeed layout
      */
-    private Button button;
+    private ImageButton button;
     /**
      * Progressbar for the newsfeed laytut
      */
@@ -94,11 +102,15 @@ public class NewsFeed extends AppCompatActivity {
      * The speed of the progress bar
      */
     private int progress;
+    /**
+     * Editbox variable
+     */
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /**
-         * Istantiate the variable and call upo jsonArr()
+         * Instantiate the variable and call upo jsonArr()
          * Configure the progressbar
          * Onclick for the Button check if item has completed collecting the data
          * Otherwise will throw a toast
@@ -117,20 +129,22 @@ public class NewsFeed extends AppCompatActivity {
         listView = findViewById(R.id.newslistview);
         button = findViewById(R.id.button);
         bar = findViewById(R.id.simpleProgressBar);
+        bar.setVisibility(View.INVISIBLE);
         progress = 100;
-        try {
-            jsonArr();
-        } catch (Exception e) {
-        }
-        bar.setMax(100);
-        for (int i = 0; i < progress; i++) {
-            if (i != 100) {
-                bar.setProgress(i);
-            }
-        }
+        editText = findViewById(R.id.newsfeedsearchbar);
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bar.setVisibility(View.VISIBLE);
+
+                try {
+                    jsonArr();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 items = webhoseClient.getItems();
 
                 if (items != null) {
@@ -144,15 +158,17 @@ public class NewsFeed extends AppCompatActivity {
                             TextView tv = (TextView) view.findViewById(android.R.id.text1);
 
                             // Set the text color of TextView (ListView Item)
-                            tv.setTextColor(Color.RED);
+                            tv.setTextColor(Color.DKGRAY);
 
                             // Generate ListView Item using TextView
                             return view;
                         }
                     };
                     listView.setAdapter(arrayAdapter);
+                    bar.setVisibility(View.INVISIBLE);
                 } else {
                     Toast.makeText(getApplicationContext(), "Still Loading Data", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -192,6 +208,48 @@ public class NewsFeed extends AppCompatActivity {
     }
 
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.news_feed_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.help:
+            helpBox();
+                break;
+        }
+        return false;
+
+    }
+
+    public void helpBox() {
+        AlertDialog alertDialog = new AlertDialog.Builder(NewsFeed.this).create();
+        alertDialog.setTitle("Abdullah Al-Hajjar");
+       String language = Locale.getDefault().getLanguage();
+       System.out.println(language);
+       if(language.equals("en")) {
+           alertDialog.setMessage("News Feed Acitvity v2.0\nHow to Use\nType in any keyword to search your desired topic then select that topic from the list to access its content you then have the option to save that specific article");
+       }else if(language.equals("fr"))
+           {
+               alertDialog.setMessage("Fil De Nouvelles v2.0\nComment utiliser\n" +
+                       "Tapez n'importe quel mot clé pour rechercher le sujet de votre choix, puis sélectionnez ce sujet dans la liste pour accéder à son contenu. Vous avez ensuite la possibilité d'enregistrer cet article");
+           }
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+
+    }
+
     public void jsonArr() throws JSONException {
         /**
          * Inserts the API Token
@@ -199,10 +257,15 @@ public class NewsFeed extends AppCompatActivity {
          * This will be modified
          */
         webhoseClient = WebhoseIOClient.getInstance("134a79ef-4a76-48e8-a627-fc9240845d29");
-        String queries = "stockmarket";
-        webhoseClient.query("filterWebData", queries);
+        String queries = editText.getText().toString();
+        webhoseClient.query("filterWebContent", queries);
 
     }
+
+
+
+
+
 
 
 }
