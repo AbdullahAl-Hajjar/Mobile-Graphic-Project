@@ -4,11 +4,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -25,8 +30,16 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
@@ -87,6 +100,7 @@ public class NewYorkTimes extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         articles = new ArrayList<>();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        ForecastQuery networkThreadOne = new ForecastQuery();
         adapter = new NewYorkTimes_ArticleArrayAdapter(this, articles);
         saved_List_Intent = new Intent(NewYorkTimes.this, NewYorkTimes_SavedArticles.class);
         gvResults.setAdapter(adapter);
@@ -128,6 +142,7 @@ public class NewYorkTimes extends AppCompatActivity {
             e.printStackTrace();
         }
         Toast.makeText(this, getResources().getString(R.string.article_searching), Toast.LENGTH_LONG).show();
+        ForecastQuery networkThreadOne = new ForecastQuery();
         client = new AsyncHttpClient();
         params = new RequestParams();
         params.put("api-key", API_KEY);
@@ -147,7 +162,6 @@ public class NewYorkTimes extends AppCompatActivity {
                 }
             }
         });
-
         progressBar.setVisibility(View.VISIBLE);
 
     }
@@ -205,5 +219,85 @@ public class NewYorkTimes extends AppCompatActivity {
         edit.commit();
     }
 
+    public class ForecastQuery extends AsyncTask<String, Integer, String> {
+        String min, max, current, iconName;
+        Bitmap icon;
+        String API_KEY = "nGhORsp4W6LhNZnA1DtcYdeVv2Kp0l8r";
+        String query = etQuery.getText().toString();
+        int offset;
+        JSONObject jObject;
 
-}
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                URL url = new URL(params[0]);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("GET");
+                conn.setDoInput(true);
+                conn.connect();
+
+                InputStream stream = conn.getInputStream();
+                XmlPullParser parser = Xml.newPullParser();
+                parser.setInput(stream, null);
+
+                while (parser.next() != XmlPullParser.END_DOCUMENT) {
+
+                    //Start of JSON reading of UV factor:
+
+                    //create the network connection:
+                    URL UVurl = new URL("http://api.nytimes.com/svc/search/v2/articlesearch.json");
+                    HttpURLConnection UVConnection = (HttpURLConnection) UVurl.openConnection();
+                    InputStream inStream = UVConnection.getInputStream();
+
+
+                    //create a JSON object from the response
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"), 8);
+                    StringBuilder sb = new StringBuilder();
+
+                    String line = null;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    String result = sb.toString();
+                    query = etQuery.getText().toString();
+                    //now a JSON table:
+                    jObject = new JSONObject(result);
+                    API_KEY = jObject.getString("api-key");
+                    query = jObject.getString("q");
+                    offset = jObject.getInt("page");
+                    JSONArray articleJsonResults = null;
+                    try {
+                        articleJsonResults = jObject.getJSONObject("response").getJSONArray("docs");
+                        progressBar.setVisibility(View.INVISIBLE);
+                        adapter.addAll(NewYorkTimes_Article.fromJSONArray(articleJsonResults));
+                        progressBar.setVisibility(View.INVISIBLE);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    publishProgress(125);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Log.e("Crash!!", ex.getMessage());
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.setProgress(values[0]);
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+        }
+
+    }}
