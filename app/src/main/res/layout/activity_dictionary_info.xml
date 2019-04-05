@@ -15,8 +15,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="200dp"
+        android:layout_below="@id/dictionaryInfoTb"
+        android:paddingTop="15dp"
         android:id="@+id/infoIcon"
         android:contentDescription="@string/dInfo1"
         android:src="@drawable/merriamwebster"/>
@@ -60,5 +60,14 @@
         android:id="@+id/infoLine5"
         android:text="@string/dInfo5"
         android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dictInstructions"
+        android:layout_below="@id/infoLine5"
+        android:textAlignment="viewStart"
+        android:padding="15dp"
+        android:text="@string/dictInstructions"/>
 
 </RelativeLayout>

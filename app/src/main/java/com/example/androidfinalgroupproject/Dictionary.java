@@ -26,9 +26,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.xmlpull.v1.XmlPullParser;
-
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -46,6 +44,11 @@ import java.util.List;
  */
 public class Dictionary extends AppCompatActivity {
 
+    /**
+     * Global parameters used to interact with the saved words list, interact with the GUI, and a
+     *  boolean to track if a word was found via the search process.
+     */
+    private DictionarySavedWords sw = new DictionarySavedWords();
     private ProgressBar pb;
     private String searchTerm;
     private EditText searchBar;
@@ -57,20 +60,25 @@ public class Dictionary extends AppCompatActivity {
     private boolean notFound =false;
     private ListView theList;
 
+    /**
+     * Lists to hold different variations and parts of a definition. Different words have a
+     * varying number of meanings and uses, and while this application currently only loads the most
+     * relevant, these expandable lists were coded to allow expandability.
+     * Note: Suggestions is only used if a word is not in the dictionary but is recognized.
+     */
     List<String> headWord = new ArrayList<>();      //<hw>
     List<String> pronunciation = new ArrayList<>(); //<pr>
     List<String> wordType = new ArrayList<>();      //<fl>
     List<String> inflections = new ArrayList<>();   //<if>
     List<String> senseNumber = new ArrayList<>();   //<sn>
     List<String> definition = new ArrayList<>();    //<dt>
-    List<String> references = new ArrayList<>();    //<sx>
     List<String> suggestions = new ArrayList<>();   //<suggestion>
 
 
     /**
      * This method initializes the Dictionary activity. The setContentView() method is used to
-     * define the layout resource to be used. Toolbar and ProgressBar are initialized, and a click
-     * listener is defined for the save button.
+     * define the layout resource to be used. Toolbar and ProgressBar are initialized, and click
+     * listeners are defined for the search and save buttons.
      *
      * @param savedInstanceState Bundle object containing activity's previously saved state. If
      * activity is new, value will be null.
@@ -92,8 +100,12 @@ public class Dictionary extends AppCompatActivity {
         dt = findViewById(R.id.definition);
         sg = findViewById(R.id.suggestTitle);
 
-
-
+        sw = new DictionarySavedWords();
+        int searchCode = getIntent().getIntExtra("savedWords",0);
+        if(searchCode != 0){
+            String wordPassed = getIntent().getStringExtra("word");
+            search(wordPassed);
+        }
 
         searchButton.setOnClickListener(btn -> {
             clearFields();
@@ -110,6 +122,7 @@ public class Dictionary extends AppCompatActivity {
             View v = inflater.inflate(R.layout.activity_dictionary_dialog, l);
             builder.setView( v );
             builder.setPositiveButton(R.string.positive, (dialog, which) -> {
+                sw.addWord(searchTerm);
                 Intent nextPage = new Intent(Dictionary.this, DictionarySavedWords.class);
                 nextPage.putExtra("dictionary", 1);
                 startActivity(nextPage);
@@ -119,6 +132,13 @@ public class Dictionary extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method is used to hide the keyboard, clear array lists, store search term,
+     * and finally call execute on the AsyncTask thread, passing the URL with the encoded
+     * search term.
+     *
+     * @param term String - The word to be searched.
+     */
     public void search(String term){
         View v = this.getCurrentFocus();
         InputMethodManager mm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -127,6 +147,7 @@ public class Dictionary extends AppCompatActivity {
         wordType.clear();
         definition.clear();
         suggestions.clear();
+        searchTerm = term;
         try {
             if(v != null)
                 mm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -139,6 +160,9 @@ public class Dictionary extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method specifically used to set all fields to blank and clear the stored search term.
+     */
     public void clearFields(){
         searchTerm = "";
         hw.setText("");
@@ -175,7 +199,13 @@ public class Dictionary extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.item1:
-                Toast.makeText(this,R.string.noSavedWords, Toast.LENGTH_LONG).show();
+
+                if(DictionarySavedWords.wordList.isEmpty()) {
+                    Toast.makeText(this, R.string.noSavedWords, Toast.LENGTH_LONG).show();
+                }else{
+                    Intent nextPage = new Intent(Dictionary.this, DictionarySavedWords.class);
+                    startActivity(nextPage);
+                }
                 break;
             case R.id.item2:
                 Intent nextPage = new Intent(Dictionary.this, DictionaryInfo.class);
@@ -210,10 +240,21 @@ public class Dictionary extends AppCompatActivity {
         pb.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * This class extends AsyncThread to allow access to server data on a seperate thread from
+     *  the GUI.
+     */
     private class DataFetcher extends AsyncTask<String, Integer, String> {
 
 
-
+        /**
+         * This method does all the work of retrieving and parsing xml data from the requested link.
+         * This data is then identified and sorted to the correct location using a for loop and a
+         * switch statement. PublishProgress() is called as each item is retrieved.
+         *
+         * @param strings Array of strings, used to pass URL from execute().
+         * @return String task finished message.
+         */
         @Override
         protected String doInBackground(String... strings) {
 
@@ -261,8 +302,10 @@ public class Dictionary extends AppCompatActivity {
 
                                 break;
                             case "dt":
+                                if (pp.next() == XmlPullParser.TEXT)
+                                    definition.add(pp.getText());
 
-                                definition.add(pp.nextText());
+                                //definition.add(pp.nextText());
                                 publishProgress(75);
 
 
@@ -285,6 +328,13 @@ public class Dictionary extends AppCompatActivity {
             return "Finished Task";
         }
 
+        /**
+         * Used to update GUI elements after the data has been received. If the word is found,
+         * typical activity is used. If the word is not found and suggestions are returned,
+         * suggestion list is made visible and populated.
+         *
+         * @param s String returned by doInBackground.
+         */
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -327,9 +377,13 @@ public class Dictionary extends AppCompatActivity {
                 }
             }
 
-
         }
 
+        /**
+         * Sets progress bar to visible and sets the appropriate value.
+         *
+         * @param values Value to update progress bar.
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
@@ -338,31 +392,58 @@ public class Dictionary extends AppCompatActivity {
         }
     }
 
+    /**
+     * This class extends BaseAdapter and is used as the adapter for the ListView of suggestions if
+     * suggestions exist. It takes an array and populates the ListView with the given data.
+     *
+     */
     protected class MyArrayAdapter<E> extends BaseAdapter
     {
         private List<E> dataCopy;
 
+        /**
+         * Constructor, stores a copy of original data passed.
+         *
+         * @param originalData data to be copied.
+         */
         MyArrayAdapter(List<E> originalData)
         {
             dataCopy = originalData;
         }
 
+        /**
+         * Return the size of the list,
+         *
+         * @return size of dataCopy.
+         */
         public int getCount()
         {
             return dataCopy.size();
         }
 
-
+        /**
+         * Get suggestion at requested position.
+         * @param position index to be used.
+         * @return word at given index.
+         */
         public E getItem(int position){
             return dataCopy.get(position);
         }
 
+        /**
+         * Inflates a row of the ListView based on a defined layout file. If a old view is found,
+         * it is used instead.
+         * @param position Item's position in list.
+         * @param old Old view to be recycled.
+         * @param parent ViewGroup
+         * @return root - New view that has been inflated.
+         */
         public View getView(int position, View old, ViewGroup parent)
         {
             LayoutInflater inflater = getLayoutInflater();
             View root = old;
             if (old == null)
-                root = inflater.inflate(R.layout.dictionary_single_row, parent, false);
+                root = inflater.inflate(R.layout.activity_dict_single_row, parent, false);
 
             TextView tv = root.findViewById(R.id.textOnRow);
             tv.setText(suggestions.get(position));
@@ -370,10 +451,15 @@ public class Dictionary extends AppCompatActivity {
         }
 
 
-        //Return 0 for now. We will change this when using databases
+        /**
+         * Returns passed position until database implementation.
+         *
+         * @param position word position in list.
+         * @return position.
+         */
         public long getItemId(int position)
         {
-            return   0;
+            return position;
             //adt.getItemId(position);
         }
     }
