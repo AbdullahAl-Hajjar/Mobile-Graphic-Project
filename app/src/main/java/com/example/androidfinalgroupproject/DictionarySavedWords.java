@@ -27,8 +27,8 @@ public class DictionarySavedWords extends AppCompatActivity {
     /**
      * ArrayList that holds the list of user saved words.
      */
-    ArrayList<String> wordList = new ArrayList<>();
-
+    static ArrayList<String> wordList = new ArrayList<>();
+    ListAdapter adt = new MyArrayAdapter<>(wordList);
     /**
      * This method initializes the DictionarySavedWords activity. The setContentView() method is
      * used to define the layout resource to be used. Toolbar, wordList and ArrayAdapter are
@@ -56,13 +56,9 @@ public class DictionarySavedWords extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(btn -> finish());
 
         // Add words to saved words array list, and set adapter.
-        wordList.add("Word 1");
-        wordList.add("Word 2");
-        wordList.add("Word 3");
-        ListAdapter adt = new MyArrayAdapter<>(wordList);
+
         ListView theList = findViewById(R.id.wordList);
         theList.setAdapter(adt);
-
         //Check if list was accessed by adding a word, if so, show Snackbar to confirm
         int addCode = getIntent().getIntExtra("dictionary",0);
         if(addCode != 0){
@@ -74,13 +70,20 @@ public class DictionarySavedWords extends AppCompatActivity {
 
         //This listens for items being clicked in the list view
         theList.setOnItemClickListener((list, item, position, id)->{
-            Bundle dataToPass = new Bundle();
-            dataToPass.putString("word", wordList.get(position) );
-            dataToPass.putInt("position", position);
-            Intent nextActivity = new Intent(DictionarySavedWords.this, DictionaryWordDetail.class);
-            nextActivity.putExtras(dataToPass); //send data to next activity
-            startActivity(nextActivity); //make the transition
+            Intent nextPage = new Intent(DictionarySavedWords.this, Dictionary.class);
+            nextPage.putExtra("savedWords", 1);
+            nextPage.putExtra("word", wordList.get(position));
+            startActivity(nextPage);
         });
+    }
+
+    /**
+     * Adds a word to the word list and notifies the adapter of the change.
+     * @param word word to be added.
+     */
+    public void addWord(String word){
+        wordList.add(word);
+        ((MyArrayAdapter) adt).notifyDataSetChanged();
     }
 
     //A copy of ArrayAdapter. You just give it an array and it will do the rest of the work.
