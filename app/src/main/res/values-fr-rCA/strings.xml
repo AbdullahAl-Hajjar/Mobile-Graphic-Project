@@ -22,13 +22,14 @@
     <string name="dictSnackbarDismiss">Rejeter</string>
     <string name="dictSnackbarText">Mot ajouté</string>
     <string name="wordNotFound">Mot non trouvé…</string>
+    <string name="noWordToSave">No word to save!</string>
     <string name="suggestTitle">Suggestions:</string>
     <string name="noSuggestions">Pas de suggestions</string>
     <string name="dInfo1">Dictionnaire Webster Merriam</string>
     <string name="dInfo2">CST2335</string>
     <string name="dInfo3">Programmation d\'interface graphique mobile</string>
     <string name="dInfo4">Auteur: Nick Hallarn</string>
-    <string name="dInfo5">Version 1.1 - April 1st, 2019</string>
+    <string name="dInfo5">Version 1.2 – 5 April, 2019</string>
     <string name="dictInstructions">Instructions: \n
         Pour utiliser cette application, tapez un mot dans la barre de recherche et cliquez sur OK.
         La définition de la le mot recherché apparaîtra dans la fenêtre principale. Pour enregistrer
