@@ -31,11 +31,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -130,48 +133,22 @@ public class NewsFeed extends AppCompatActivity {
         button = findViewById(R.id.button);
         bar = findViewById(R.id.simpleProgressBar);
         bar.setVisibility(View.INVISIBLE);
-        progress = 100;
         editText = findViewById(R.id.newsfeedsearchbar);
-
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bar.setVisibility(View.VISIBLE);
 
                 try {
-                    jsonArr();
-                } catch (Exception e) {
+                jsonArr();
+                listDisplay();
+                }catch (Exception e)
+                {
                     e.printStackTrace();
-                }
-
-                items = webhoseClient.getItems();
-
-                if (items != null) {
-                    arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, items) {
-                        @Override
-                        public View getView(int position, View convertView, ViewGroup parent) {
-                            // Get the Item from ListView
-                            View view = super.getView(position, convertView, parent);
-
-                            // Initialize a TextView for ListView each Item
-                            TextView tv = (TextView) view.findViewById(android.R.id.text1);
-
-                            // Set the text color of TextView (ListView Item)
-                            tv.setTextColor(Color.DKGRAY);
-
-                            // Generate ListView Item using TextView
-                            return view;
-                        }
-                    };
-                    listView.setAdapter(arrayAdapter);
-                    bar.setVisibility(View.INVISIBLE);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Still Loading Data", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
+
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -250,19 +227,58 @@ public class NewsFeed extends AppCompatActivity {
 
     }
 
-    public void jsonArr() throws JSONException {
+    public void jsonArr() throws JSONException{
         /**
          * Inserts the API Token
          * instert the Search KeyWord
          * This will be modified
          */
-        webhoseClient = WebhoseIOClient.getInstance("134a79ef-4a76-48e8-a627-fc9240845d29");
-        String queries = editText.getText().toString();
-        webhoseClient.query("filterWebContent", queries);
-
+        bar.setVisibility(View.VISIBLE);
+        bar.setProgress(10);
+            webhoseClient = WebhoseIOClient.getInstance("134a79ef-4a76-48e8-a627-fc9240845d29");
+            String queries = editText.getText().toString();
+            webhoseClient.query("filterWebContent", queries);
+            System.out.println("JSONARR>>>>>>>>>>>ON");
     }
 
+    public void listDisplay()
+    {
 
+        System.out.println("LISTDISPLAY>>>>>>>>>>>WAIT");
+
+
+        try {
+            Toast.makeText(getApplicationContext(), "Loading Data Please Wait", Toast.LENGTH_LONG).show();
+Thread.sleep(8000);
+        }catch (Exception e){}
+        bar.setVisibility(View.INVISIBLE);
+    System.out.println("LISTDISPLAY>>>>>>>>>>>ON");
+        webhoseClient = WebhoseIOClient.getInstance("134a79ef-4a76-48e8-a627-fc9240845d29");
+        items = webhoseClient.getItems();
+    if (items != null) {
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                // Get the Item from ListView
+                View view = super.getView(position, convertView, parent);
+
+                // Initialize a TextView for ListView each Item
+                TextView tv = (TextView) view.findViewById(android.R.id.text1);
+
+                // Set the text color of TextView (ListView Item)
+                tv.setTextColor(Color.DKGRAY);
+
+                // Generate ListView Item using TextView
+                return view;
+            }
+        };
+        listView.setAdapter(arrayAdapter);
+        bar.setVisibility(View.INVISIBLE);
+    } else {
+        Toast.makeText(getApplicationContext(), "Still Loading Data", Toast.LENGTH_SHORT).show();
+
+    }
+}
 
 
 
