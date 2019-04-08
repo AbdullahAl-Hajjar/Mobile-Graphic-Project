@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewYorkTimes_SavedArticleWebView"></activity>
+        <activity android:name=".NewYorkTimes_SavedArticleWebView" />
         <activity android:name=".NewYorkTimes_ArticleDetails" />
         <activity
             android:name=".NewYorkTimes_SavedArticles"
@@ -31,9 +31,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DictionarySavedWords"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".DictionaryWordDetail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PlaneTracker" />
         <activity android:name=".NewsFeed" />

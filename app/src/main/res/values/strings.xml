@@ -22,6 +22,7 @@
     <string name="dictSnackbarDismiss">Dismiss</string>
     <string name="dictSnackbarText">Word Added!</string>
     <string name="wordNotFound">Word not found…</string>
+    <string name="wordDeleted"> has been deleted!</string>
     <string name="noWordToSave">No word to save!</string>
     <string name="suggestTitle">Suggestions:</string>
     <string name="noSuggestions">No suggestions</string>

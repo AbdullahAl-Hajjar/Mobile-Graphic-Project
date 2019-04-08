@@ -43,12 +43,10 @@ import java.util.List;
  * @version 1.2.
  */
 public class Dictionary extends AppCompatActivity {
-
     /**
      * Global parameters used to interact with the saved words list, interact with the GUI, and a
      *  boolean to track if a word was found via the search process.
      */
-    private DictionarySavedWords sw = new DictionarySavedWords();
     private ProgressBar pb;
     private String searchTerm;
     private EditText searchBar;
@@ -99,7 +97,7 @@ public class Dictionary extends AppCompatActivity {
         dt = findViewById(R.id.definition);
         sg = findViewById(R.id.suggestTitle);
 
-        sw = new DictionarySavedWords();
+
         int searchCode = getIntent().getIntExtra("savedWords",0);
         if(searchCode != 0){
             String wordPassed = getIntent().getStringExtra("word");
@@ -115,16 +113,16 @@ public class Dictionary extends AppCompatActivity {
 
 
         saveButton.setOnClickListener(btn -> {
-            if (!definition.isEmpty()) {
+            if (!headWord.get(0).equals(this.getResources().getString(R.string.wordNotFound))) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 LayoutInflater inflater = this.getLayoutInflater();
                 LinearLayout l = findViewById(R.id.customDialog);
                 View v = inflater.inflate(R.layout.activity_dictionary_dialog, l);
                 builder.setView(v);
                 builder.setPositiveButton(R.string.positive, (dialog, which) -> {
-                    sw.addWord(searchTerm);
                     Intent nextPage = new Intent(Dictionary.this, DictionarySavedWords.class);
                     nextPage.putExtra("dictionary", 1);
+                    nextPage.putExtra("word", searchTerm);
                     startActivity(nextPage);
                 });
                 builder.setNegativeButton(R.string.negative, (dialog, which) -> dialog.dismiss());
@@ -203,17 +201,12 @@ public class Dictionary extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.item1:
-
-                if(DictionarySavedWords.wordList.isEmpty()) {
-                    Toast.makeText(this, R.string.noSavedWords, Toast.LENGTH_LONG).show();
-                }else{
-                    Intent nextPage = new Intent(Dictionary.this, DictionarySavedWords.class);
-                    startActivity(nextPage);
-                }
+                Intent swPage = new Intent(Dictionary.this, DictionarySavedWords.class);
+                startActivity(swPage);
                 break;
             case R.id.item2:
-                Intent nextPage = new Intent(Dictionary.this, DictionaryInfo.class);
-                startActivity(nextPage);
+                Intent infoPage = new Intent(Dictionary.this, DictionaryInfo.class);
+                startActivity(infoPage);
                 break;
         }
         return true;
@@ -441,7 +434,7 @@ public class Dictionary extends AppCompatActivity {
             LayoutInflater inflater = getLayoutInflater();
             View root = old;
             if (old == null)
-                root = inflater.inflate(R.layout.activity_dict_single_row, parent, false);
+                root = inflater.inflate(R.layout.activity_dict_sugg_row, parent, false);
 
             TextView tv = root.findViewById(R.id.textOnRow);
             tv.setText(suggestions.get(position));
@@ -455,10 +448,8 @@ public class Dictionary extends AppCompatActivity {
          * @param position word position in list.
          * @return position.
          */
-        public long getItemId(int position)
-        {
+        public long getItemId(int position) {
             return position;
-            //adt.getItemId(position);
         }
     }
 }
