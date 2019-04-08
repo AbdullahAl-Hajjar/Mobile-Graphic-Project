@@ -103,13 +103,30 @@ public class DictionarySavedWords extends AppCompatActivity {
             }
         }
 
+        boolean isTablet = findViewById(R.id.fragmentLocation) != null;
+
         //This listens for items being clicked in the list view
         theList.setOnItemClickListener((list, item, position, id)->{
-            Intent nextPage = new Intent(DictionarySavedWords.this, Dictionary.class);
-            nextPage.putExtra("savedWords", 1);
-            nextPage.putExtra("word", wordList.get(position).getWord());
-            startActivity(nextPage);
-        });
+
+            Bundle dataToPass = new Bundle();
+
+            dataToPass.putString("word", wordList.get(position).getWord());
+            dataToPass.putInt("savedWords", 1);
+            if (isTablet){
+                DictionaryFragment dFragment = new DictionaryFragment(); //add a DetailFragment
+                dFragment.setArguments( dataToPass ); //pass it a bundle for information
+                dFragment.setTablet(true);  //tell the fragment if it's running on a tablet or not
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                        .addToBackStack("AnyName") //make the back button undo the transaction
+                        .commit(); //actually load the fragment.
+            }else {
+                Intent nextPage = new Intent(DictionarySavedWords.this, Dictionary.class);
+                nextPage.putExtras(dataToPass); //send data to next activity
+                startActivity(nextPage); //make the transition
+            }
+            });
     }
 
     /**
