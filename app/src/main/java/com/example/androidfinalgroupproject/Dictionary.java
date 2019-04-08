@@ -113,7 +113,7 @@ public class Dictionary extends AppCompatActivity {
 
 
         saveButton.setOnClickListener(btn -> {
-            if (!headWord.get(0).equals(this.getResources().getString(R.string.wordNotFound))) {
+            if (!headWord.isEmpty()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 LayoutInflater inflater = this.getLayoutInflater();
                 LinearLayout l = findViewById(R.id.customDialog);

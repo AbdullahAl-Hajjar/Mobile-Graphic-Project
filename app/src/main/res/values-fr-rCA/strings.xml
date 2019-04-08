@@ -37,10 +37,8 @@
         le mot dans la fenêtre principale, tapez sur le bouton de sauvegarde en bas de l\'écran.
         Pour voir les mots sauvegardés, tapez sur l\’icône du dossier sur le barre d\'outils.
         Cela chargera une liste de mots sauvegardés par l\'utilisateur. Cliquez sur un mot dans la
-        liste pour voir c\'est la définition ou le supprimer de la liste.
+        liste pour voir sa définition ou cliquez sur le bouton "X" pour le retirer de la liste.
     </string>
-
-
     <string name="article_confirm">Vous serez redirigé vers le site Web de NYTimes. D\'accord?</string>
     <string name="nytimes_about3">Version 1: 29 mars 2019</string>
     <string name="nytimes_about4">Développé par: Youssef Rizk</string>
