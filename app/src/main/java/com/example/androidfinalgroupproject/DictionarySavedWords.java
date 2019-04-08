@@ -37,7 +37,7 @@ public class DictionarySavedWords extends AppCompatActivity {
     ArrayList<DictionaryWords> wordList = new ArrayList<>();
     ListAdapter adt = new MyArrayAdapter<>(wordList);
     SQLiteDatabase db;
-    String word;
+
 
     /**
      * This method initializes the DictionarySavedWords activity. The setContentView() method is
@@ -91,7 +91,7 @@ public class DictionarySavedWords extends AppCompatActivity {
         //Check if list was accessed by adding a word, if so, show Snackbar to confirm
         int addCode = getIntent().getIntExtra("dictionary",0);
         if(addCode != 0){
-            word = getIntent().getStringExtra("word");
+            String word = getIntent().getStringExtra("word");
             addWord(word);
             CoordinatorLayout cl = findViewById(R.id.savedWordsLayout);
             Snackbar sb = Snackbar.make(cl,R.string.dictSnackbarText, Snackbar.LENGTH_INDEFINITE);
@@ -113,7 +113,7 @@ public class DictionarySavedWords extends AppCompatActivity {
     }
 
     /**
-     * Adds a word to the word list and notifies the adapter of the change.
+     * Adds a word to the database and word list and notifies the adapter of the change.
      * @param word word to be added.
      */
     public void addWord(String word){
@@ -126,6 +126,10 @@ public class DictionarySavedWords extends AppCompatActivity {
         ((MyArrayAdapter) adt).notifyDataSetChanged();
     }
 
+    /**
+     * Deletes a word from the database and word list and notifies the adapter of the change.
+     * @param id Id of the word to be deleted.
+     */
     public void deleteWord(int id){
         String w = wordList.get(id).getWord();
         long _id = wordList.get(id).getWordID();
@@ -139,8 +143,6 @@ public class DictionarySavedWords extends AppCompatActivity {
         sb.setAction(R.string.dictSnackbarDismiss, e-> sb.dismiss());
         sb.show();
     }
-
-    //A copy of ArrayAdapter. You just give it an array and it will do the rest of the work.
 
     /**
      * This inner class extends BaseAdapter. It's purpose is to provide data to fill the saved words

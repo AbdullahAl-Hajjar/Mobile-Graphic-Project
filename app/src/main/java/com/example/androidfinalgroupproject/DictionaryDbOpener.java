@@ -12,18 +12,31 @@ public class DictionaryDbOpener extends SQLiteOpenHelper {
     static final String COL_ID = "_id";
     static final String COL_WORD = "WORD";
 
+    /**
+     * Constructor, uses parent class to initialize the database.
+     * @param ctx The Activity where the database is being opened.
+     */
     DictionaryDbOpener(Activity ctx) {
         super(ctx, DATABASE_NAME, null, VERSION_NUM);
     }
 
+    /**
+     * Create the new database if it does not exist yet. Executes an SQL create statement if called.
+     * @param db Database object for running SQL queries
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //Make sure you put spaces between SQL statements and Java strings:
         db.execSQL("CREATE TABLE " + TABLE_NAME + "( "
                 + COL_ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COL_WORD + " TEXT)");
     }
 
+    /**
+     * Called if the database exists and the constructor version is newer than the saved version.
+     * @param db Database object
+     * @param oldVersion Saved version
+     * @param newVersion New version
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.i("Database upgrade", "Old version:" + oldVersion + " newVersion:"+newVersion);
@@ -35,6 +48,12 @@ public class DictionaryDbOpener extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Called if the database exists and the constructor version is older than the saved version.
+     * @param db Database object
+     * @param oldVersion Saved version
+     * @param newVersion New Version
+     */
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
