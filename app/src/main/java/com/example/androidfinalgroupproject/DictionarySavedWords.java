@@ -1,19 +1,26 @@
 package com.example.androidfinalgroupproject;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -21,14 +28,17 @@ import java.util.List;
  * AppCompatActivity. Current functionality is a placeholder to fulfill milestone 1 requirements.
  *
  * @author Nick Hallarn.
- * @version 1.0.
+ * @version 1.2.
  */
 public class DictionarySavedWords extends AppCompatActivity {
     /**
      * ArrayList that holds the list of user saved words.
      */
-    static ArrayList<String> wordList = new ArrayList<>();
+    ArrayList<DictionaryWords> wordList = new ArrayList<>();
     ListAdapter adt = new MyArrayAdapter<>(wordList);
+    SQLiteDatabase db;
+
+
     /**
      * This method initializes the DictionarySavedWords activity. The setContentView() method is
      * used to define the layout resource to be used. Toolbar, wordList and ArrayAdapter are
@@ -42,6 +52,25 @@ public class DictionarySavedWords extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary_words);
+
+        DictionaryDbOpener dbOpener = new DictionaryDbOpener(this);
+        db = dbOpener.getWritableDatabase();
+        String [] columns = {DictionaryDbOpener.COL_ID, DictionaryDbOpener.COL_WORD};
+        Cursor results = db.query(false, DictionaryDbOpener.TABLE_NAME, columns,
+                null, null, null, null, null, null);
+        int wordColIndex = results.getColumnIndex(DictionaryDbOpener.COL_WORD);
+        int idColIndex = results.getColumnIndex(DictionaryDbOpener.COL_ID);
+        wordList.clear();
+        while(results.moveToNext())
+        {
+            String word = results.getString(wordColIndex);
+            long id = results.getLong(idColIndex);
+            Log.i("Word", "\nSaved Word :" + word + "\nID :" + id);
+            wordList.add(new DictionaryWords(word, id));
+        }
+        results.close();
+
+
         setTheme(R.style.DictionaryTheme);
         Toolbar toolbar = findViewById(R.id.savedWordsTb);
         toolbar.setTitle(R.string.savedWordsTitle);
@@ -62,31 +91,58 @@ public class DictionarySavedWords extends AppCompatActivity {
         //Check if list was accessed by adding a word, if so, show Snackbar to confirm
         int addCode = getIntent().getIntExtra("dictionary",0);
         if(addCode != 0){
+            String word = getIntent().getStringExtra("word");
+            addWord(word);
             CoordinatorLayout cl = findViewById(R.id.savedWordsLayout);
             Snackbar sb = Snackbar.make(cl,R.string.dictSnackbarText, Snackbar.LENGTH_INDEFINITE);
             sb.setAction(R.string.dictSnackbarDismiss, e-> sb.dismiss());
             sb.show();
+        }else{
+            if (wordList.isEmpty()){
+                Toast.makeText(this, R.string.noSavedWords, Toast.LENGTH_LONG).show();
+            }
         }
 
         //This listens for items being clicked in the list view
         theList.setOnItemClickListener((list, item, position, id)->{
             Intent nextPage = new Intent(DictionarySavedWords.this, Dictionary.class);
             nextPage.putExtra("savedWords", 1);
-            nextPage.putExtra("word", wordList.get(position));
+            nextPage.putExtra("word", wordList.get(position).getWord());
             startActivity(nextPage);
         });
     }
 
     /**
-     * Adds a word to the word list and notifies the adapter of the change.
+     * Adds a word to the database and word list and notifies the adapter of the change.
      * @param word word to be added.
      */
     public void addWord(String word){
-        wordList.add(word);
+
+        ContentValues row = new ContentValues();
+        row.put(DictionaryDbOpener.COL_WORD, word);
+        long id = db.insert(DictionaryDbOpener.TABLE_NAME, null, row);
+        Log.i("add","Word =" + word);
+        wordList.add(new DictionaryWords(word, id));
         ((MyArrayAdapter) adt).notifyDataSetChanged();
     }
 
-    //A copy of ArrayAdapter. You just give it an array and it will do the rest of the work.
+    /**
+     * Deletes a word from the database and word list and notifies the adapter of the change.
+     * @param id Id of the word to be deleted.
+     */
+    public void deleteWord(int id){
+        String w = wordList.get(id).getWord();
+        long _id = wordList.get(id).getWordID();
+        db.delete(DictionaryDbOpener.TABLE_NAME, "_id=?", new String[] {Long.toString(_id)});
+        wordList.remove(id);
+        ((MyArrayAdapter) adt).notifyDataSetChanged();
+        CoordinatorLayout cl = findViewById(R.id.savedWordsLayout);
+        Snackbar sb = Snackbar.make(cl,w + " " +
+                        getApplicationContext().getResources().getString(R.string.wordDeleted),
+                Snackbar.LENGTH_INDEFINITE);
+        sb.setAction(R.string.dictSnackbarDismiss, e-> sb.dismiss());
+        sb.show();
+    }
 
     /**
      * This inner class extends BaseAdapter. It's purpose is to provide data to fill the saved words
@@ -147,16 +203,21 @@ public class DictionarySavedWords extends AppCompatActivity {
             LayoutInflater inflater = getLayoutInflater();
 
             //Recycle views if possible:
-            TextView root = (TextView)old;
+            View root = old;
             //If there are no spare layouts, load a new one:
             if(old == null)
-                root = (TextView)inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+                root = inflater.inflate(R.layout.activity_dict_saved_row, parent, false);
 
             //Get the string to go in row: position
             String toDisplay = getItem(position).toString();
 
+
             //Set the text of the text view
-            root.setText(toDisplay);
+            TextView tv = root.findViewById(R.id.savedRow);
+            tv.setText(toDisplay);
+
+            ImageButton delButton = root.findViewById(R.id.deleteWordButton);
+            delButton.setOnClickListener(v -> deleteWord((int) adt.getItemId(position)));
 
             //Return the text view:
             return root;
@@ -170,7 +231,7 @@ public class DictionarySavedWords extends AppCompatActivity {
          */
         public long getItemId(int position)
         {
-            return 0;
+            return position;
         }
     }
 }
