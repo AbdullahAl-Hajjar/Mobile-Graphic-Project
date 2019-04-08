@@ -37,7 +37,7 @@ public class DictionarySavedWords extends AppCompatActivity {
     ArrayList<DictionaryWords> wordList = new ArrayList<>();
     ListAdapter adt = new MyArrayAdapter<>(wordList);
     SQLiteDatabase db;
-
+    DictionaryFragment dFragment;
 
     /**
      * This method initializes the DictionarySavedWords activity. The setContentView() method is
@@ -113,12 +113,12 @@ public class DictionarySavedWords extends AppCompatActivity {
             dataToPass.putString("word", wordList.get(position).getWord());
             dataToPass.putInt("savedWords", 1);
             if (isTablet){
-                DictionaryFragment dFragment = new DictionaryFragment(); //add a DetailFragment
+                 dFragment = new DictionaryFragment(); //add a DetailFragment
                 dFragment.setArguments( dataToPass ); //pass it a bundle for information
                 dFragment.setTablet(true);  //tell the fragment if it's running on a tablet or not
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                        .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
                         .addToBackStack("AnyName") //make the back button undo the transaction
                         .commit(); //actually load the fragment.
             }else {
@@ -153,6 +153,7 @@ public class DictionarySavedWords extends AppCompatActivity {
         db.delete(DictionaryDbOpener.TABLE_NAME, "_id=?", new String[] {Long.toString(_id)});
         wordList.remove(id);
         ((MyArrayAdapter) adt).notifyDataSetChanged();
+        getSupportFragmentManager().beginTransaction().remove(dFragment).commit();
         CoordinatorLayout cl = findViewById(R.id.savedWordsLayout);
         Snackbar sb = Snackbar.make(cl,w + " " +
                         getApplicationContext().getResources().getString(R.string.wordDeleted),

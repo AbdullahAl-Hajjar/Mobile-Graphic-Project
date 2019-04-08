@@ -41,7 +41,8 @@ public class NewYorkTimes_SavedArticles extends AppCompatActivity {
 
         NewYorkTimes_ArticleActivity.createAdapter(NewYorkTimes_SavedArticles.this);
         list1.setAdapter(NewYorkTimes_ArticleActivity.saved_Adapter);
-
+        dbOpener = new NewYorkTimes_MyDatabaseOpenHelper(this);
+        db = dbOpener.getWritableDatabase();
        isTablet = (findViewById(R.id.fragmentLocation) != null);
         list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -72,7 +73,7 @@ public class NewYorkTimes_SavedArticles extends AppCompatActivity {
      * This method is called when deleting an article from the saved list's fragment
      */
     public void deleteItem(int id) {
-        NewYorkTimes_ArticleActivity.db.delete(NewYorkTimes_MyDatabaseOpenHelper.TABLE_NAME, NewYorkTimes_MyDatabaseOpenHelper.COL_ID + "=" + id, null);
+        db.delete(NewYorkTimes_MyDatabaseOpenHelper.TABLE_NAME, NewYorkTimes_MyDatabaseOpenHelper.COL_ID + "=" + id, null);
         NewYorkTimes_Article position = NewYorkTimes_ArticleActivity.saved_Adapter.getItem(id);
         NewYorkTimes_ArticleActivity.saved_Articles.remove(position);
 
