@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * The NewYorkTimes_ArticleActivity class is the activity opening NYTimes website link to read the article.
  * This class extends AppCompatActivity.
  */
-class NewYorkTimes_ArticleActivity extends AppCompatActivity {
+ class NewYorkTimes_ArticleActivity extends AppCompatActivity {
     /**
      * dbOpener variable is an instance of NewYorkTimes_MyDatabaseOpenHelper to access the database
      * db is an instance of SQLiteDatabase to execute the database
@@ -59,17 +59,17 @@ class NewYorkTimes_ArticleActivity extends AppCompatActivity {
      * This method initializes class fields and getting the URL string from NewYorkTimes_Article class.
      * setWebViewClient is used to open the link.
      */
-    public static void createAdapter(Context ctx)
-    {
-        saved_Adapter = new NewYorkTimes_SavedArticleArrayAdapter(ctx, saved_Articles);
-    }
+    public static void createAdapter(Context cnt) {
+        saved_Adapter = new NewYorkTimes_SavedArticleArrayAdapter(cnt, saved_Articles);
 
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newyorktimes_activity_article);
         toolbar = (Toolbar) findViewById(R.id.toolbar_menu);
         setSupportActionBar(toolbar);
+
 
         article = (NewYorkTimes_Article) getIntent().getSerializableExtra("article");
         webView = (WebView) findViewById(R.id.wvArticle);
