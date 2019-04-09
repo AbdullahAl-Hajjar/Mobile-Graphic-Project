@@ -112,6 +112,7 @@ public class NewYorkTimes extends AppCompatActivity {
             article = new NewYorkTimes_Article(  url,header, urlpicture );
             NewYorktimes_ArticleActivity.saved_Articles.add(article);
         }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_search_activity);
         etQuery = (EditText) findViewById(R.id.etQuery);
         saved_list = (Button) findViewById(R.id.savedArticles);
