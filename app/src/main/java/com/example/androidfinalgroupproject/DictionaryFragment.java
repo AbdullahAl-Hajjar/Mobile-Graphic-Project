@@ -13,6 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * @author Nick Hallarn
+ * @version 1.3.
+ */
 public class DictionaryFragment extends Fragment {
     boolean isTablet;
 

@@ -40,7 +40,7 @@ import java.util.List;
  * definition, save the current word, view saved words list, and view info pane.
  *
  * @author Nick Hallarn.
- * @version 1.2.
+ * @version 1.3.
  */
 public class Dictionary extends AppCompatActivity {
     /**

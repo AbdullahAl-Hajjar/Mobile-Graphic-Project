@@ -5,6 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * @author Nick Hallarn
+ * @version 1.3.
+ */
 public class DictionaryDbOpener extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "WordsDB";
     private static final int VERSION_NUM = 1;

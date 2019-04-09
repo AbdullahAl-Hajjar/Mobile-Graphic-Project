@@ -28,7 +28,7 @@ import java.util.List;
  * AppCompatActivity. Current functionality is a placeholder to fulfill milestone 1 requirements.
  *
  * @author Nick Hallarn.
- * @version 1.2.
+ * @version 1.3.
  */
 public class DictionarySavedWords extends AppCompatActivity {
     /**
