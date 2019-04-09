@@ -1,6 +1,7 @@
 package com.example.androidfinalgroupproject;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -53,7 +54,10 @@ public class NewYorkTimes_ArticleActivity extends AppCompatActivity {
     NewYorkTimes_Article article;
     public static ArrayList<NewYorkTimes_Article> saved_Articles = new ArrayList<NewYorkTimes_Article>();
     public static NewYorkTimes_SavedArticleArrayAdapter saved_Adapter;
+    public static void createAdapter(Context cnt) {
+        saved_Adapter = new NewYorkTimes_SavedArticleArrayAdapter(cnt, saved_Articles);
 
+    }
     /**
      * This method initializes class fields and getting the URL string from NewYorkTimes_Article class.
      * setWebViewClient is used to open the link.
