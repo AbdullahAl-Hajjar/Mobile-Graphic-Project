@@ -2,7 +2,6 @@ package com.example.androidfinalgroupproject;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.loopj.android.http.RequestParams;
 
 /**
  * This class NewYorkTimes_SavedArticles is the activity to load the saved articles into Listview.
@@ -43,7 +41,7 @@ public class NewYorkTimes_SavedArticles extends AppCompatActivity {
         list1.setAdapter(NewYorkTimes_ArticleActivity.saved_Adapter);
         dbOpener = new NewYorkTimes_MyDatabaseOpenHelper(this);
         db = dbOpener.getWritableDatabase();
-       isTablet = (findViewById(R.id.fragmentLocation) != null);
+        isTablet = (findViewById(R.id.fragmentLocation) != null);
         list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -112,7 +112,7 @@ public class NewYorkTimes extends AppCompatActivity {
             int urlpictureindex = results_saved.getColumnIndex(NewYorkTimes_MyDatabaseOpenHelper.COL_PIC_URL);
             String urlpicture = results_saved.getString(urlpictureindex);
             //add the new Contact to the array list:
-            article = new NewYorkTimes_Article( header, url, urlpicture );
+            article = new NewYorkTimes_Article(  url,header, urlpicture );
             NewYorkTimes_ArticleActivity.saved_Articles.add(article);
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_search_activity);
@@ -122,10 +122,6 @@ public class NewYorkTimes extends AppCompatActivity {
         sp = getSharedPreferences("searchQuery", Context.MODE_PRIVATE);
         String searchText = sp.getString("searchQuery", "");
         etQuery.setText(searchText);
-
-
-
-//        NewYorkTimes_ArticleActivity.saved_Adapter.notifyDataSetChanged();
 
         progressBar = findViewById(R.id.progressBar);
         articles = new ArrayList<>();
