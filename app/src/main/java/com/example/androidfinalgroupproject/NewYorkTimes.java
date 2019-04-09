@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -35,8 +34,6 @@ import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -113,7 +110,7 @@ public class NewYorkTimes extends AppCompatActivity {
             String urlpicture = results_saved.getString(urlpictureindex);
             //add the new Contact to the array list:
             article = new NewYorkTimes_Article(  url,header, urlpicture );
-            NewYorkTimes_ArticleActivity.saved_Articles.add(article);
+            NewYorktimes_ArticleActivity.saved_Articles.add(article);
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_search_activity);
         etQuery = (EditText) findViewById(R.id.etQuery);
@@ -135,7 +132,7 @@ public class NewYorkTimes extends AppCompatActivity {
         gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intent = new Intent(getApplicationContext(), NewYorkTimes_ArticleActivity.class);
+                intent = new Intent(getApplicationContext(), NewYorktimes_ArticleActivity.class);
                 article = articles.get(position);
                 alertDialog();
             }
