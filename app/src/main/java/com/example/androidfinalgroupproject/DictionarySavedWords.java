@@ -153,7 +153,8 @@ public class DictionarySavedWords extends AppCompatActivity {
         db.delete(DictionaryDbOpener.TABLE_NAME, "_id=?", new String[] {Long.toString(_id)});
         wordList.remove(id);
         ((MyArrayAdapter) adt).notifyDataSetChanged();
-        getSupportFragmentManager().beginTransaction().remove(dFragment).commit();
+        if (dFragment != null)
+            getSupportFragmentManager().beginTransaction().remove(dFragment).commit();
         CoordinatorLayout cl = findViewById(R.id.savedWordsLayout);
         Snackbar sb = Snackbar.make(cl,w + " " +
                         getApplicationContext().getResources().getString(R.string.wordDeleted),

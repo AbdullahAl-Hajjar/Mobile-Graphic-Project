@@ -2,6 +2,7 @@ package com.example.androidfinalgroupproject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -295,6 +296,9 @@ public class Dictionary extends AppCompatActivity {
                             case "dt":
                                 if (pp.next() == XmlPullParser.TEXT)
                                     definition.add(pp.getText());
+                                if (definition.get(0).trim().equals(":"))
+                                    pp.next();
+                                    definition.add(pp.nextText());
 
                                 //definition.add(pp.nextText());
                                 publishProgress(75);
@@ -347,7 +351,18 @@ public class Dictionary extends AppCompatActivity {
                     wt.setText(wordType.get(0));
                 }
                 if (!definition.isEmpty()) {
-                    df.setText(definition.get(0));
+                    //  If first definition found is a colon and a blank line, get and print the
+                    //  next available text.
+                    if(definition.get(0).trim().equals(":")) {
+                        for (String def : definition) {
+                            if (!def.trim().equals(":"))
+                                df.setText(String.format("%s\n%s", df.getText(), def));
+                                df.setTypeface(null, Typeface.ITALIC);
+                        }
+                    }else{
+                        df.setText(definition.get(0));
+                        df.setTypeface(null, Typeface.NORMAL);
+                    }
                 }
 
             }else {
