@@ -66,11 +66,11 @@ public class NewYorktimes_ArticleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newyorktimes_activity_article);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_menu);
+        toolbar = findViewById(R.id.toolbar_menu);
         setSupportActionBar(toolbar);
         saved_Adapter = new NewYorkTimes_SavedArticleArrayAdapter(this, saved_Articles);
         article = (NewYorkTimes_Article) getIntent().getSerializableExtra("article");
-        webView = (WebView) findViewById(R.id.wvArticle);
+        webView = findViewById(R.id.wvArticle);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
