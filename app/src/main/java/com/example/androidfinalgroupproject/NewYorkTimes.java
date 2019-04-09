@@ -61,7 +61,7 @@ public class NewYorkTimes extends AppCompatActivity {
      * url variable is static finalString variable of nytimes.com website for article search
      * API_KEY variable is static final String variable of the API KEY belong to me.
      * sb variable is the Snackbar variable that display a Welcome snackbar message upon lunching the application
-     * intent is an Intent variable to load NewYorkTimes_ArticleActivity activity when an article title clicked.
+     * intent is an Intent variable to load NewYorktimes_ArticleActivity activity when an article title clicked.
      * article variable is NewYorkTimes_Article object that will be used when an article title clicked to load the article
      */
     ProgressBar progressBar;

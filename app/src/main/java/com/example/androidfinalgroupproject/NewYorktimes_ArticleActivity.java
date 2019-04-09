@@ -15,14 +15,14 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-
+import android.content.Context;
 import java.util.ArrayList;
 
 /**
- * The NewYorkTimes_ArticleActivity class is the activity opening NYTimes website link to read the article.
+ * The NewYorktimes_ArticleActivity class is the activity opening NYTimes website link to read the article.
  * This class extends AppCompatActivity.
  */
-public class NewYorkTimes_ArticleActivity extends AppCompatActivity {
+public class NewYorktimes_ArticleActivity extends AppCompatActivity {
     /**
      * dbOpener variable is an instance of NewYorkTimes_MyDatabaseOpenHelper to access the database
      * db is an instance of SQLiteDatabase to execute the database
@@ -58,7 +58,10 @@ public class NewYorkTimes_ArticleActivity extends AppCompatActivity {
      * This method initializes class fields and getting the URL string from NewYorkTimes_Article class.
      * setWebViewClient is used to open the link.
      */
+    public static void createAdapter(Context cnt) {
+        saved_Adapter = new NewYorkTimes_SavedArticleArrayAdapter(cnt, saved_Articles);
 
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
