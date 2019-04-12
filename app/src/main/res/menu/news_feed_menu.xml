@@ -9,4 +9,14 @@
         android:icon="@drawable/bluehelp"
 
         />
+    <item
+        android:id="@+id/favorites_newsfeed"
+        android:title="help"
+        app:showAsAction = "always"
+        android:orderInCategory="50"
+        android:icon="@drawable/newsfeed_favorites"
+
+        />
+
+
 </menu>
