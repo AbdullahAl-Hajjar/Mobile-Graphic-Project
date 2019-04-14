@@ -109,7 +109,6 @@ public class DictionarySavedWords extends AppCompatActivity {
         theList.setOnItemClickListener((list, item, position, id)->{
 
             Bundle dataToPass = new Bundle();
-
             dataToPass.putString("word", wordList.get(position).getWord());
             dataToPass.putInt("savedWords", 1);
             if (isTablet){

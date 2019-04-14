@@ -31,28 +31,6 @@ public class DictionaryFragment extends Fragment {
         // Inflate the layout for this fragment
         View result =  inflater.inflate(R.layout.activity_dictionary_fragment, container, false);
 
-        //show the message
-        //TextView message = (TextView)result.findViewById(R.id.messageText);
-        //message.setText(dataFromActivity.getString(ChatRoomActivity.ITEM_SELECTED));
-
-        //Dictionary d = new Dictionary();
-        //d.search(word);
-        //String hw = d.headWord.get(0);
-        //String wt = d.wordType.get(0);
-        //String pr = d.pronunciation.get(0);
-        //String df = d.definition.get(0);
-
-        TextView hW = result.findViewById(R.id.headWordFrag);
-        //TextView pR = result.findViewById(R.id.pronunciationFrag);
-        //TextView wT = result.findViewById(R.id.wordTypeFrag);
-        //TextView dF = result.findViewById(R.id.definitionFrag);
-
-        hW.setText(word);
-        //pR.setText(pr);
-        //wT.setText(wt);
-        //dF.setText(df);
-
-
         return result;
     }
 

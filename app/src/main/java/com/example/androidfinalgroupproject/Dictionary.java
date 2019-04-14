@@ -2,6 +2,7 @@ package com.example.androidfinalgroupproject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
@@ -58,6 +59,7 @@ public class Dictionary extends AppCompatActivity {
     private TextView wt;
     private boolean notFound =false;
     private ListView theList;
+    private SharedPreferences pref;
 
     /**
      * Lists to hold different variations and parts of a definition. Different words have a
@@ -98,6 +100,9 @@ public class Dictionary extends AppCompatActivity {
         dt = findViewById(R.id.definition);
         sg = findViewById(R.id.suggestTitle);
 
+        pref = getSharedPreferences("dictionaryPrefs", Context.MODE_PRIVATE);
+        String lastWord = pref.getString("lastWord","");
+        searchBar.setText(lastWord);
 
         int searchCode = getIntent().getIntExtra("savedWords",0);
         if(searchCode != 0){
@@ -107,6 +112,10 @@ public class Dictionary extends AppCompatActivity {
 
         searchButton.setOnClickListener(btn -> {
             clearFields();
+            View v = this.getCurrentFocus();
+            InputMethodManager mm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            if(v != null)
+                mm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             searchTerm = searchBar.getText().toString().trim();
             search(searchTerm);
         });
@@ -135,6 +144,15 @@ public class Dictionary extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor edit = pref.edit();
+        String lastWord = searchBar.getText().toString();
+        edit.putString("lastWord", lastWord);
+        edit.apply();
+    }
+
     /**
      * This method is used to hide the keyboard, clear array lists, store search term,
      * and finally call execute on the AsyncTask thread, passing the URL with the encoded
@@ -143,8 +161,6 @@ public class Dictionary extends AppCompatActivity {
      * @param term String - The word to be searched.
      */
     public void search(String term){
-        View v = this.getCurrentFocus();
-        InputMethodManager mm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         headWord.clear();
         pronunciation.clear();
         wordType.clear();
@@ -152,8 +168,6 @@ public class Dictionary extends AppCompatActivity {
         suggestions.clear();
         searchTerm = term;
         try {
-            if(v != null)
-                mm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             String param = URLEncoder.encode(term, "UTF-8");
             DataFetcher networkThread = new DataFetcher();
             networkThread.execute("https://www.dictionaryapi.com/api/v1/references/sd3/xml/" + param
@@ -162,6 +176,7 @@ public class Dictionary extends AppCompatActivity {
             Log.e("Program crashed", e.getMessage());
         }
     }
+
 
     /**
      * Method specifically used to set all fields to blank and clear the stored search term.
