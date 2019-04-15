@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/transparent"
+    android:id="@+id/fragmentLocation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DictionaryFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/DictionaryTheme"
+        android:background="?attr/colorPrimary" />
+
+    <!--HEADWORD-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/headWordFrag"
+        android:layout_below="@id/my_toolbar"
+        android:textSize="40sp"
+        android:textColor="@color/colorTextNew"
+        android:text=""/>
+
+    <!--PRONUNCIATION-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pronunciationFrag"
+        android:layout_below="@id/headWordFrag"
+        android:textSize="20sp"
+        android:textColor="@color/colorTextNew"
+        android:textStyle="italic"/>
+
+    <!--WORD TYPE-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/wordTypeFrag"
+        android:layout_below="@id/pronunciationFrag"
+        android:textSize="20sp"/>
+
+    <!--DEFINITION-->
+    <TextView
+        android:id="@+id/definitionFrag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/wordTypeFrag"
+        android:textColor="@color/colorTextNew"
+        android:textSize="20sp" />
+
+</RelativeLayout>

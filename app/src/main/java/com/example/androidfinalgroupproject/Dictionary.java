@@ -2,6 +2,8 @@ package com.example.androidfinalgroupproject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -40,15 +42,13 @@ import java.util.List;
  * definition, save the current word, view saved words list, and view info pane.
  *
  * @author Nick Hallarn.
- * @version 1.0.
+ * @version 1.3.
  */
 public class Dictionary extends AppCompatActivity {
-
     /**
      * Global parameters used to interact with the saved words list, interact with the GUI, and a
      *  boolean to track if a word was found via the search process.
      */
-    private DictionarySavedWords sw = new DictionarySavedWords();
     private ProgressBar pb;
     private String searchTerm;
     private EditText searchBar;
@@ -59,17 +59,17 @@ public class Dictionary extends AppCompatActivity {
     private TextView wt;
     private boolean notFound =false;
     private ListView theList;
+    private SharedPreferences pref;
 
     /**
      * Lists to hold different variations and parts of a definition. Different words have a
      * varying number of meanings and uses, and while this application currently only loads the most
-     * relevant, these expandable lists were coded to allow expandability.
+     * relevant, these lists were coded to allow expandability.
      * Note: Suggestions is only used if a word is not in the dictionary but is recognized.
      */
     List<String> headWord = new ArrayList<>();      //<hw>
     List<String> pronunciation = new ArrayList<>(); //<pr>
     List<String> wordType = new ArrayList<>();      //<fl>
-    List<String> inflections = new ArrayList<>();   //<if>
     List<String> senseNumber = new ArrayList<>();   //<sn>
     List<String> definition = new ArrayList<>();    //<dt>
     List<String> suggestions = new ArrayList<>();   //<suggestion>
@@ -100,48 +100,65 @@ public class Dictionary extends AppCompatActivity {
         dt = findViewById(R.id.definition);
         sg = findViewById(R.id.suggestTitle);
 
-        sw = new DictionarySavedWords();
-        int searchCode = getIntent().getIntExtra("savedWords",0);
-        if(searchCode != 0){
-            String wordPassed = getIntent().getStringExtra("word");
-            search(wordPassed);
-        }
+        pref = getSharedPreferences("dictionaryPrefs", Context.MODE_PRIVATE);
+        String lastWord = pref.getString("lastWord","");
+        searchBar.setText(lastWord);
 
         searchButton.setOnClickListener(btn -> {
             clearFields();
+            View v = this.getCurrentFocus();
+            InputMethodManager mm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            if(v != null)
+                mm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             searchTerm = searchBar.getText().toString().trim();
             search(searchTerm);
         });
 
-
-
         saveButton.setOnClickListener(btn -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            LayoutInflater inflater = this.getLayoutInflater();
-            LinearLayout l = findViewById(R.id.customDialog);
-            View v = inflater.inflate(R.layout.activity_dictionary_dialog, l);
-            builder.setView( v );
-            builder.setPositiveButton(R.string.positive, (dialog, which) -> {
-                sw.addWord(searchTerm);
-                Intent nextPage = new Intent(Dictionary.this, DictionarySavedWords.class);
-                nextPage.putExtra("dictionary", 1);
-                startActivity(nextPage);
-            });
-            builder.setNegativeButton(R.string.negative, (dialog, which) -> dialog.dismiss());
-            builder.create().show();
+            if (!headWord.isEmpty()) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                LayoutInflater inflater = this.getLayoutInflater();
+                LinearLayout l = findViewById(R.id.customDialog);
+                View v = inflater.inflate(R.layout.activity_dictionary_dialog, l);
+                builder.setView(v);
+                builder.setPositiveButton(R.string.positive, (dialog, which) -> {
+                    Intent nextPage = new Intent(Dictionary.this, DictionarySavedWords.class);
+                    nextPage.putExtra("dictionary", 1);
+                    nextPage.putExtra("word", searchTerm);
+                    nextPage.putExtra("pron", pronunciation.get(0));
+                    nextPage.putExtra("type", wordType.get(0));
+                    nextPage.putExtra("def", definition.get(0));
+                    startActivity(nextPage);
+                });
+                builder.setNegativeButton(R.string.negative, (dialog, which) -> dialog.dismiss());
+                builder.create().show();
+            }else{
+                Toast.makeText(this, R.string.noWordToSave, Toast.LENGTH_LONG).show();
+            }
         });
+
     }
 
     /**
-     * This method is used to hide the keyboard, clear array lists, store search term,
+     * On pause method, saves current search term to saved preferences
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor edit = pref.edit();
+        String lastWord = searchBar.getText().toString();
+        edit.putString("lastWord", lastWord);
+        edit.apply();
+    }
+
+    /**
+     * This method is used to clear array lists, store search term,
      * and finally call execute on the AsyncTask thread, passing the URL with the encoded
      * search term.
      *
      * @param term String - The word to be searched.
      */
     public void search(String term){
-        View v = this.getCurrentFocus();
-        InputMethodManager mm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         headWord.clear();
         pronunciation.clear();
         wordType.clear();
@@ -149,16 +166,15 @@ public class Dictionary extends AppCompatActivity {
         suggestions.clear();
         searchTerm = term;
         try {
-            if(v != null)
-                mm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             String param = URLEncoder.encode(term, "UTF-8");
             DataFetcher networkThread = new DataFetcher();
             networkThread.execute("https://www.dictionaryapi.com/api/v1/references/sd3/xml/" + param
                     + "?key=4556541c-b8ed-4674-9620-b6cba447184f");
         }catch(Exception e){
-            Log.e("Program crashed", e.getMessage());
+            Log.e("Program crashed", e.toString());
         }
     }
+
 
     /**
      * Method specifically used to set all fields to blank and clear the stored search term.
@@ -199,17 +215,12 @@ public class Dictionary extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.item1:
-
-                if(DictionarySavedWords.wordList.isEmpty()) {
-                    Toast.makeText(this, R.string.noSavedWords, Toast.LENGTH_LONG).show();
-                }else{
-                    Intent nextPage = new Intent(Dictionary.this, DictionarySavedWords.class);
-                    startActivity(nextPage);
-                }
+                Intent swPage = new Intent(Dictionary.this, DictionarySavedWords.class);
+                startActivity(swPage);
                 break;
             case R.id.item2:
-                Intent nextPage = new Intent(Dictionary.this, DictionaryInfo.class);
-                startActivity(nextPage);
+                Intent infoPage = new Intent(Dictionary.this, DictionaryInfo.class);
+                startActivity(infoPage);
                 break;
         }
         return true;
@@ -278,8 +289,9 @@ public class Dictionary extends AppCompatActivity {
 
                                 break;
                             case "pr":
+                                if (pp.next() == XmlPullParser.TEXT)
+                                    pronunciation.add('\\' + pp.getText() + "\\");
 
-                                pronunciation.add('\\' + pp.nextText() + "\\");
                                 publishProgress(20);
 
                                 break;
@@ -287,12 +299,6 @@ public class Dictionary extends AppCompatActivity {
 
                                 wordType.add(pp.nextText());
                                 publishProgress(30);
-
-                                break;
-                            case "if":
-
-                                inflections.add(pp.nextText());
-                                publishProgress(40);
 
                                 break;
                             case "sn":
@@ -304,11 +310,11 @@ public class Dictionary extends AppCompatActivity {
                             case "dt":
                                 if (pp.next() == XmlPullParser.TEXT)
                                     definition.add(pp.getText());
-
-                                //definition.add(pp.nextText());
+                                if (definition.get(0).trim().equals(":")) {
+                                    pp.next();
+                                    definition.set(0, pp.nextText());
+                                }
                                 publishProgress(75);
-
-
                                 break;
                             case "suggestion":
                                 suggestions.add(pp.nextText());
@@ -356,7 +362,18 @@ public class Dictionary extends AppCompatActivity {
                     wt.setText(wordType.get(0));
                 }
                 if (!definition.isEmpty()) {
-                    df.setText(definition.get(0));
+                    //  If first definition found is a colon and a blank line, get and print the
+                    //  next available text.
+                    if(definition.get(0).trim().equals(":")) {
+                        for (String def : definition) {
+                            if (!def.trim().equals(":"))
+                                df.setText(String.format("%s\n%s", df.getText(), def));
+                                df.setTypeface(null, Typeface.ITALIC);
+                        }
+                    }else{
+                        df.setText(definition.get(0));
+                        df.setTypeface(null, Typeface.NORMAL);
+                    }
                 }
 
             }else {
@@ -443,7 +460,7 @@ public class Dictionary extends AppCompatActivity {
             LayoutInflater inflater = getLayoutInflater();
             View root = old;
             if (old == null)
-                root = inflater.inflate(R.layout.activity_dict_single_row, parent, false);
+                root = inflater.inflate(R.layout.activity_dict_sugg_row, parent, false);
 
             TextView tv = root.findViewById(R.id.textOnRow);
             tv.setText(suggestions.get(position));
@@ -457,10 +474,8 @@ public class Dictionary extends AppCompatActivity {
          * @param position word position in list.
          * @return position.
          */
-        public long getItemId(int position)
-        {
+        public long getItemId(int position) {
             return position;
-            //adt.getItemId(position);
         }
     }
 }

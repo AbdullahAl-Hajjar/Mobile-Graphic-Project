@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -75,12 +77,15 @@ public class NewYorkTimes extends AppCompatActivity {
     private static final String API_KEY = "nGhORsp4W6LhNZnA1DtcYdeVv2Kp0l8r";
     Snackbar sb;
     Intent intent;
-    NewYorkTimes_Article article;
     SharedPreferences sp;
     Intent saved_List_Intent;
     AsyncHttpClient client;
     String query;
     RequestParams params;
+    NewYorkTimes_MyDatabaseOpenHelper dbOpener;
+    public static SQLiteDatabase db;
+    NewYorkTimes_Article article;
+
 
     /**
      * This method initializes the NewYorkTimes activity.
@@ -90,6 +95,26 @@ public class NewYorkTimes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newyorktimes_activity_search);
+
+        //get a database:
+        dbOpener = new NewYorkTimes_MyDatabaseOpenHelper(this);
+        db = dbOpener.getWritableDatabase();
+        //query all the results from the database:
+        String[] columns = {NewYorkTimes_MyDatabaseOpenHelper.COL_ID, NewYorkTimes_MyDatabaseOpenHelper.COL_HEADER, NewYorkTimes_MyDatabaseOpenHelper.COL_URL, NewYorkTimes_MyDatabaseOpenHelper.COL_PIC_URL};
+        Cursor results_saved = db.query(false, NewYorkTimes_MyDatabaseOpenHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+
+        while(results_saved.moveToNext())
+        {
+            int headerindex = results_saved.getColumnIndex(NewYorkTimes_MyDatabaseOpenHelper.COL_HEADER);
+            String header = results_saved.getString(headerindex);
+            int urlindex = results_saved.getColumnIndex(NewYorkTimes_MyDatabaseOpenHelper.COL_URL);
+            String url = results_saved.getString(urlindex);
+            int urlpictureindex = results_saved.getColumnIndex(NewYorkTimes_MyDatabaseOpenHelper.COL_PIC_URL);
+            String urlpicture = results_saved.getString(urlpictureindex);
+            //add the new Contact to the array list:
+            article = new NewYorkTimes_Article( header, url, urlpicture );
+            NewYorkTimes_ArticleActivity.saved_Articles.add(article);
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_search_activity);
         etQuery = (EditText) findViewById(R.id.etQuery);
         saved_list = (Button) findViewById(R.id.savedArticles);
@@ -97,6 +122,11 @@ public class NewYorkTimes extends AppCompatActivity {
         sp = getSharedPreferences("searchQuery", Context.MODE_PRIVATE);
         String searchText = sp.getString("searchQuery", "");
         etQuery.setText(searchText);
+
+
+
+//        NewYorkTimes_ArticleActivity.saved_Adapter.notifyDataSetChanged();
+
         progressBar = findViewById(R.id.progressBar);
         articles = new ArrayList<>();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -125,7 +155,6 @@ public class NewYorkTimes extends AppCompatActivity {
 
         saved_list.setOnClickListener(btn -> {
             startActivity(saved_List_Intent);
-
         });
     }
 

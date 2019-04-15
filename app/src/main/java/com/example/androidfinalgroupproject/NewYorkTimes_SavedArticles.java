@@ -2,11 +2,15 @@ package com.example.androidfinalgroupproject;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.loopj.android.http.RequestParams;
 
 /**
  * This class NewYorkTimes_SavedArticles is the activity to load the saved articles into Listview.
@@ -21,6 +25,9 @@ public class NewYorkTimes_SavedArticles extends AppCompatActivity {
     protected boolean isTablet;
     ListView list1;
     NewYorkTimes_ArticleFragment messageFragment;
+    NewYorkTimes_MyDatabaseOpenHelper dbOpener;
+    public static SQLiteDatabase db;
+    NewYorkTimes_Article article;
 
     /**
      * This initiate the fields and implement the setOnItemClickListener when the article is clicked it open a fragment
@@ -31,8 +38,12 @@ public class NewYorkTimes_SavedArticles extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newyorktimes_saved_articles);
         list1 = (ListView) findViewById(R.id.list1);
+
+        NewYorkTimes_ArticleActivity.createAdapter(NewYorkTimes_SavedArticles.this);
         list1.setAdapter(NewYorkTimes_ArticleActivity.saved_Adapter);
-        isTablet = (findViewById(R.id.fragmentLocation) != null);
+        dbOpener = new NewYorkTimes_MyDatabaseOpenHelper(this);
+        db = dbOpener.getWritableDatabase();
+       isTablet = (findViewById(R.id.fragmentLocation) != null);
         list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -62,7 +73,7 @@ public class NewYorkTimes_SavedArticles extends AppCompatActivity {
      * This method is called when deleting an article from the saved list's fragment
      */
     public void deleteItem(int id) {
-        NewYorkTimes_ArticleActivity.db.delete(NewYorkTimes_MyDatabaseOpenHelper.TABLE_NAME, NewYorkTimes_MyDatabaseOpenHelper.COL_ID + "=" + id, null);
+        db.delete(NewYorkTimes_MyDatabaseOpenHelper.TABLE_NAME, NewYorkTimes_MyDatabaseOpenHelper.COL_ID + "=" + id, null);
         NewYorkTimes_Article position = NewYorkTimes_ArticleActivity.saved_Adapter.getItem(id);
         NewYorkTimes_ArticleActivity.saved_Articles.remove(position);
 

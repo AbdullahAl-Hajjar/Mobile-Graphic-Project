@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
  * version date, and instructions for using the application.
  *
  * @author Nick Hallarn.
- * @version 1.0.
+ * @version 1.3.
  */
 public class DictionaryInfo extends AppCompatActivity {
 
