@@ -38,6 +38,7 @@
         toolbar. This will load a list of words saved by the user. Click a word in the list to see
         it\'s definition or click the "X" button to remove it from the list.
     </string>
+    <string name="deleteWord">Delete</string>
 
 
     <string name="article_confirm">You will be redirected to NYTimes website. OK?</string>
@@ -61,5 +62,6 @@
     <string name="delete">Delete</string>
     <string name="newSearchButton">Search</string>
     <string name="newsfeedsearch">Search</string>
+
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.androidfinalgroupproject;
 
+
 /**
  * Simple object class to store words for the dictionary saved word list.
  * Word variable is the saved word.
@@ -9,16 +10,25 @@ package com.example.androidfinalgroupproject;
  */
 public class DictionaryWords {
     private String word;
+    private String pron;
+    private String type;
+    private String def;
     private long id;
 
     /**
      * Constructor for word class
      * @param word Saved word
      * @param id Database id
+     * @param pron Pronunciation
+     * @param type Word Type
+     * @param def Definition
      */
-    DictionaryWords(String word, long id){
+    DictionaryWords(String word, String pron, String type, String def, long id){
         this.word = word;
         this.id = id;
+        this.pron = pron;
+        this.type = type;
+        this.def = def;
     }
 
     /**
@@ -35,6 +45,28 @@ public class DictionaryWords {
      */
     long getWordID() { return this.id; }
 
+    /**
+     * Get the word pronunciation
+     * @return pronunciation
+     */
+    String getPron() { return this.pron; }
+
+    /**
+     * Get the word type
+     * @return word type
+     */
+    String getType() { return this.type; }
+
+    /**
+     * Get the words definition
+     * @return definition
+     */
+    String getDef() { return this.def; }
+
+    /**
+     * to String method
+     * @return Word
+     */
     @Override
     public String toString() {
         return getWord();

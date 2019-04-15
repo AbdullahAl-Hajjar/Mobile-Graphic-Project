@@ -39,6 +39,7 @@
         Cela chargera une liste de mots sauvegardés par l\'utilisateur. Cliquez sur un mot dans la
         liste pour voir sa définition ou cliquez sur le bouton "X" pour le retirer de la liste.
     </string>
+    <string name="deleteWord">Delete</string>
     <string name="article_confirm">Vous serez redirigé vers le site Web de NYTimes. D\'accord?</string>
     <string name="nytimes_about3">Version 1: 29 mars 2019</string>
     <string name="nytimes_about4">Développé par: Youssef Rizk</string>
@@ -59,4 +60,5 @@
     <string name="delete">Effacer</string>
     <string name="newSearchButton">Chercher</string>
     <string name="newsfeedsearch">Chercher</string>
+
 </resources>

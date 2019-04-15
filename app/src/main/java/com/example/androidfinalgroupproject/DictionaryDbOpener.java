@@ -15,6 +15,9 @@ public class DictionaryDbOpener extends SQLiteOpenHelper {
     static final String TABLE_NAME = "Words";
     static final String COL_ID = "_id";
     static final String COL_WORD = "WORD";
+    static final String COL_PRON = "PRON";
+    static final String COL_TYPE = "TYPE";
+    static final String COL_DEF = "DEF";
 
     /**
      * Constructor, uses parent class to initialize the database.
@@ -32,7 +35,8 @@ public class DictionaryDbOpener extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + "( "
                 + COL_ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COL_WORD + " TEXT)");
+                + COL_WORD + " TEXT," + COL_PRON + " TEXT,"
+                + COL_TYPE + " TEXT," + COL_DEF + " TEXT)");
     }
 
     /**

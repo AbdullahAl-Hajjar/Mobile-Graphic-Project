@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -15,12 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -55,18 +56,27 @@ public class DictionarySavedWords extends AppCompatActivity {
 
         DictionaryDbOpener dbOpener = new DictionaryDbOpener(this);
         db = dbOpener.getWritableDatabase();
-        String [] columns = {DictionaryDbOpener.COL_ID, DictionaryDbOpener.COL_WORD};
+        String [] columns = {DictionaryDbOpener.COL_ID, DictionaryDbOpener.COL_WORD,
+                DictionaryDbOpener.COL_PRON, DictionaryDbOpener.COL_TYPE, DictionaryDbOpener.COL_DEF};
+
         Cursor results = db.query(false, DictionaryDbOpener.TABLE_NAME, columns,
                 null, null, null, null, null, null);
-        int wordColIndex = results.getColumnIndex(DictionaryDbOpener.COL_WORD);
+
         int idColIndex = results.getColumnIndex(DictionaryDbOpener.COL_ID);
+        int wordColIndex = results.getColumnIndex(DictionaryDbOpener.COL_WORD);
+        int pronColIndex = results.getColumnIndex(DictionaryDbOpener.COL_PRON);
+        int typeColIndex = results.getColumnIndex(DictionaryDbOpener.COL_TYPE);
+        int defColIndex = results.getColumnIndex(DictionaryDbOpener.COL_DEF);
+
         wordList.clear();
         while(results.moveToNext())
         {
-            String word = results.getString(wordColIndex);
             long id = results.getLong(idColIndex);
-            Log.i("Word", "\nSaved Word :" + word + "\nID :" + id);
-            wordList.add(new DictionaryWords(word, id));
+            String word = results.getString(wordColIndex);
+            String pron = results.getString(pronColIndex);
+            String type = results.getString(typeColIndex);
+            String def = results.getString(defColIndex);
+            wordList.add(new DictionaryWords(word, pron, type, def, id));
         }
         results.close();
 
@@ -92,7 +102,10 @@ public class DictionarySavedWords extends AppCompatActivity {
         int addCode = getIntent().getIntExtra("dictionary",0);
         if(addCode != 0){
             String word = getIntent().getStringExtra("word");
-            addWord(word);
+            String pron = getIntent().getStringExtra("pron");
+            String type = getIntent().getStringExtra("type");
+            String def = getIntent().getStringExtra("def");
+            addWord(word, pron, type, def);
             CoordinatorLayout cl = findViewById(R.id.savedWordsLayout);
             Snackbar sb = Snackbar.make(cl,R.string.dictSnackbarText, Snackbar.LENGTH_INDEFINITE);
             sb.setAction(R.string.dictSnackbarDismiss, e-> sb.dismiss());
@@ -110,18 +123,22 @@ public class DictionarySavedWords extends AppCompatActivity {
 
             Bundle dataToPass = new Bundle();
             dataToPass.putString("word", wordList.get(position).getWord());
-            dataToPass.putInt("savedWords", 1);
+            dataToPass.putString("pron", wordList.get(position).getPron());
+            dataToPass.putString("type", wordList.get(position).getType());
+            dataToPass.putString("def", wordList.get(position).getDef());
+
             if (isTablet){
                  dFragment = new DictionaryFragment(); //add a DetailFragment
+                FrameLayout f = findViewById(R.id.fragmentLocation);
+                f.setVisibility(View.VISIBLE);
                 dFragment.setArguments( dataToPass ); //pass it a bundle for information
-                dFragment.setTablet(true);  //tell the fragment if it's running on a tablet or not
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
                         .addToBackStack("AnyName") //make the back button undo the transaction
                         .commit(); //actually load the fragment.
             }else {
-                Intent nextPage = new Intent(DictionarySavedWords.this, Dictionary.class);
+                Intent nextPage = new Intent(DictionarySavedWords.this, DictionaryWordDetail.class);
                 nextPage.putExtras(dataToPass); //send data to next activity
                 startActivity(nextPage); //make the transition
             }
@@ -132,13 +149,16 @@ public class DictionarySavedWords extends AppCompatActivity {
      * Adds a word to the database and word list and notifies the adapter of the change.
      * @param word word to be added.
      */
-    public void addWord(String word){
+    public void addWord(String word, String pron, String type, String def){
 
         ContentValues row = new ContentValues();
         row.put(DictionaryDbOpener.COL_WORD, word);
+        row.put(DictionaryDbOpener.COL_PRON, pron);
+        row.put(DictionaryDbOpener.COL_TYPE, type);
+        row.put(DictionaryDbOpener.COL_DEF, def);
         long id = db.insert(DictionaryDbOpener.TABLE_NAME, null, row);
         Log.i("add","Word =" + word);
-        wordList.add(new DictionaryWords(word, id));
+        wordList.add(new DictionaryWords(word, pron, type, def, id));
         ((MyArrayAdapter) adt).notifyDataSetChanged();
     }
 
@@ -226,6 +246,11 @@ public class DictionarySavedWords extends AppCompatActivity {
             if(old == null)
                 root = inflater.inflate(R.layout.activity_dict_saved_row, parent, false);
 
+            if (position % 2 == 1){
+                root.setBackgroundColor(Color.LTGRAY);
+            }else{
+                root.setBackgroundColor(Color.TRANSPARENT);
+            }
             //Get the string to go in row: position
             String toDisplay = getItem(position).toString();
 

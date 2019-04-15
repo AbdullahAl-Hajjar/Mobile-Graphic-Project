@@ -104,12 +104,6 @@ public class Dictionary extends AppCompatActivity {
         String lastWord = pref.getString("lastWord","");
         searchBar.setText(lastWord);
 
-        int searchCode = getIntent().getIntExtra("savedWords",0);
-        if(searchCode != 0){
-            String wordPassed = getIntent().getStringExtra("word");
-            search(wordPassed);
-        }
-
         searchButton.setOnClickListener(btn -> {
             clearFields();
             View v = this.getCurrentFocus();
@@ -119,8 +113,6 @@ public class Dictionary extends AppCompatActivity {
             searchTerm = searchBar.getText().toString().trim();
             search(searchTerm);
         });
-
-
 
         saveButton.setOnClickListener(btn -> {
             if (!headWord.isEmpty()) {
@@ -133,6 +125,9 @@ public class Dictionary extends AppCompatActivity {
                     Intent nextPage = new Intent(Dictionary.this, DictionarySavedWords.class);
                     nextPage.putExtra("dictionary", 1);
                     nextPage.putExtra("word", searchTerm);
+                    nextPage.putExtra("pron", pronunciation.get(0));
+                    nextPage.putExtra("type", wordType.get(0));
+                    nextPage.putExtra("def", definition.get(0));
                     startActivity(nextPage);
                 });
                 builder.setNegativeButton(R.string.negative, (dialog, which) -> dialog.dismiss());
@@ -144,6 +139,9 @@ public class Dictionary extends AppCompatActivity {
 
     }
 
+    /**
+     * On pause method, saves current search term to saved preferences
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -154,7 +152,7 @@ public class Dictionary extends AppCompatActivity {
     }
 
     /**
-     * This method is used to hide the keyboard, clear array lists, store search term,
+     * This method is used to clear array lists, store search term,
      * and finally call execute on the AsyncTask thread, passing the URL with the encoded
      * search term.
      *
@@ -173,7 +171,7 @@ public class Dictionary extends AppCompatActivity {
             networkThread.execute("https://www.dictionaryapi.com/api/v1/references/sd3/xml/" + param
                     + "?key=4556541c-b8ed-4674-9620-b6cba447184f");
         }catch(Exception e){
-            Log.e("Program crashed", e.getMessage());
+            Log.e("Program crashed", e.toString());
         }
     }
 
@@ -291,8 +289,9 @@ public class Dictionary extends AppCompatActivity {
 
                                 break;
                             case "pr":
+                                if (pp.next() == XmlPullParser.TEXT)
+                                    pronunciation.add('\\' + pp.getText() + "\\");
 
-                                pronunciation.add('\\' + pp.nextText() + "\\");
                                 publishProgress(20);
 
                                 break;
@@ -311,14 +310,11 @@ public class Dictionary extends AppCompatActivity {
                             case "dt":
                                 if (pp.next() == XmlPullParser.TEXT)
                                     definition.add(pp.getText());
-                                if (definition.get(0).trim().equals(":"))
+                                if (definition.get(0).trim().equals(":")) {
                                     pp.next();
-                                    definition.add(pp.nextText());
-
-                                //definition.add(pp.nextText());
+                                    definition.set(0, pp.nextText());
+                                }
                                 publishProgress(75);
-
-
                                 break;
                             case "suggestion":
                                 suggestions.add(pp.nextText());
