@@ -29,4 +29,11 @@
     <style name="MyProgressBar">
         <item name="colorAccent">#F00</item>
     </style>
+
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#0128F1</item>
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
 </resources>

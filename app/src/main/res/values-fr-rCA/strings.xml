@@ -61,4 +61,6 @@
     <string name="newSearchButton">Chercher</string>
     <string name="newsfeedsearch">Chercher</string>
 
+    <string name="newsfeedWarning">La barre de progression ne fonctionne pas, veuillez patienter et Data Will Load</string>
+
 </resources>

@@ -62,6 +62,7 @@
     <string name="delete">Delete</string>
     <string name="newSearchButton">Search</string>
     <string name="newsfeedsearch">Search</string>
+    <string name="newsfeedWarning">Progress Bar doesnt work please wait and Data  Will Load</string>
 
 
 </resources>
