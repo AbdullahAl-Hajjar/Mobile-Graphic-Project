@@ -21,7 +21,7 @@ public class NewYorkTimes_MyDatabaseOpenHelper extends SQLiteOpenHelper {
      * COL_PIC_URL is the picture url of the article
      */
     public static final String DATABASE_NAME = "MyDatabase";
-    public static final int VERSION_NUM = 9;
+    public static final int VERSION_NUM = 22;
     public static final String TABLE_NAME = "ArticlesTable";
     public static final String COL_ID = "_id";
     public static final String COL_HEADER = "ARTICLE_HEADER";

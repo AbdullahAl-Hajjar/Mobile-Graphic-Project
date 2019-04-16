@@ -2,7 +2,6 @@ package com.example.androidfinalgroupproject;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.loopj.android.http.RequestParams;
 
 /**
  * This class NewYorkTimes_SavedArticles is the activity to load the saved articles into Listview.
@@ -39,19 +37,19 @@ public class NewYorkTimes_SavedArticles extends AppCompatActivity {
         setContentView(R.layout.newyorktimes_saved_articles);
         list1 = (ListView) findViewById(R.id.list1);
 
-        NewYorkTimes_ArticleActivity.createAdapter(NewYorkTimes_SavedArticles.this);
-        list1.setAdapter(NewYorkTimes_ArticleActivity.saved_Adapter);
+        NewYorktimes_ArticleActivity.createAdapter(NewYorkTimes_SavedArticles.this);
+        list1.setAdapter(NewYorktimes_ArticleActivity.saved_Adapter);
         dbOpener = new NewYorkTimes_MyDatabaseOpenHelper(this);
         db = dbOpener.getWritableDatabase();
-       isTablet = (findViewById(R.id.fragmentLocation) != null);
+        isTablet = (findViewById(R.id.fragmentLocation) != null);
         list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle newBundle = new Bundle();
-                newBundle.putString("headline", NewYorkTimes_ArticleActivity.saved_Adapter.getItem(position).getHeadline());
-                newBundle.putString("url", NewYorkTimes_ArticleActivity.saved_Adapter.getItem(position).getWebUrl());
-                newBundle.putString("pic_url", NewYorkTimes_ArticleActivity.saved_Adapter.getItem(position).getThumbnail());
-                newBundle.putInt("id", NewYorkTimes_ArticleActivity.saved_Adapter.getPosition(NewYorkTimes_ArticleActivity.saved_Adapter.getItem(position)));
+                newBundle.putString("headline", NewYorktimes_ArticleActivity.saved_Adapter.getItem(position).getHeadline());
+                newBundle.putString("url", NewYorktimes_ArticleActivity.saved_Adapter.getItem(position).getWebUrl());
+                newBundle.putString("pic_url", NewYorktimes_ArticleActivity.saved_Adapter.getItem(position).getThumbnail());
+                newBundle.putInt("id", NewYorktimes_ArticleActivity.saved_Adapter.getPosition(NewYorktimes_ArticleActivity.saved_Adapter.getItem(position)));
 
                 if (isTablet) {
                     messageFragment = new NewYorkTimes_ArticleFragment(NewYorkTimes_SavedArticles.this);
@@ -74,10 +72,10 @@ public class NewYorkTimes_SavedArticles extends AppCompatActivity {
      */
     public void deleteItem(int id) {
         db.delete(NewYorkTimes_MyDatabaseOpenHelper.TABLE_NAME, NewYorkTimes_MyDatabaseOpenHelper.COL_ID + "=" + id, null);
-        NewYorkTimes_Article position = NewYorkTimes_ArticleActivity.saved_Adapter.getItem(id);
-        NewYorkTimes_ArticleActivity.saved_Articles.remove(position);
+        NewYorkTimes_Article position = NewYorktimes_ArticleActivity.saved_Adapter.getItem(id);
+        NewYorktimes_ArticleActivity.saved_Articles.remove(position);
 
-        NewYorkTimes_ArticleActivity.saved_Adapter.notifyDataSetChanged();
+        NewYorktimes_ArticleActivity.saved_Adapter.notifyDataSetChanged();
     }
 
     /**
