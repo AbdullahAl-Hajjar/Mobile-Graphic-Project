@@ -22,6 +22,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class NewsFeedDetailFragment2 extends Fragment {
+
+    /**
+     * Fragment displays the content of the click item for the NewsfeedFav Table
+     */
     private Bundle dataFromActivity;
     private long id;
     private  String message;
@@ -73,6 +77,10 @@ public class NewsFeedDetailFragment2 extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        /**
+         * Checks which item was clicked then compares it to the database to retreive its content NewsFeedFav table
+         */
         message = dataFromActivity.getString(NewsFeedFavorites.ITEM_SELECTED);
         textView = result.findViewById(R.id.newsfeedtitle2);
         textView.setText(message);
@@ -94,6 +102,9 @@ public class NewsFeedDetailFragment2 extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        /**
+         *  end the activity on pause
+         */
        NewsFeedEmptyActivity2 parent = (NewsFeedEmptyActivity2) getActivity();
         parent.finish();
     }

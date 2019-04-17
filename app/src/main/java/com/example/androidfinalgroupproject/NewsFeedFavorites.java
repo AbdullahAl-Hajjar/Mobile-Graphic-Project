@@ -72,14 +72,18 @@ printCursor(results);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /**
+                 * send data to next activity
+                 * make the transition
+                 */
                 String title = listView.getItemAtPosition(position).toString();
                 idNumber = (int) id;
                 Bundle dataToPass = new Bundle();
                 dataToPass.putString(ITEM_SELECTED, title);
                 dataToPass.putLong(ITEM_ID, id);
                 Intent nextActivity = new Intent(getApplicationContext(), NewsFeedEmptyActivity2.class);
-                nextActivity.putExtras(dataToPass); //send data to next activity
-                startActivityForResult(nextActivity, EMPTY_ACTIVITY);//make the transition
+                nextActivity.putExtras(dataToPass);
+                startActivityForResult(nextActivity, EMPTY_ACTIVITY);
 
             }
 
@@ -90,11 +94,17 @@ printCursor(results);
     @Override
     protected void onRestart() {
         super.onRestart();
+        /**
+         * Ends the Activity
+         */
         finish();
     }
 
     public void listDisplay() {
 
+        /**
+         * Lists the Favorite objects saved by the user
+         */
         int titleColIndex = results.getColumnIndex(NewsFeedFavOpener.COL_TITLE);
 
 
@@ -122,6 +132,10 @@ printCursor(results);
 
     public void printCursor(Cursor c)
     {
+
+        /**
+         * prints the  cursors of the newsfeedfav Table
+         */
         String[] columns = c.getColumnNames();
         int colId = c.getColumnIndex(NewsFeedFavOpener.COL_ID);
         int colIndex = c.getColumnIndex(NewsFeedFavOpener.COL_TITLE );

@@ -20,6 +20,10 @@ import java.util.ArrayList;
 
 public class NewsFeedEmptyActivity2 extends AppCompatActivity {
 
+    /**
+     *  Emtpy activity to pass data from bundle
+     */
+
     private ArrayList<String> items;
     private NewsFeedFavOpener opener;
    private  SQLiteDatabase db;
@@ -28,16 +32,24 @@ public class NewsFeedEmptyActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /**
+         * Cursor results = dbn.query(false, NewsFeedFavOpener.TABLE_NAME, columns, null, null, null, null, null, null);
+         * get the data that was passed from FragmentExample
+         * pass data to the the fragment
+         */
+
+
         setContentView(R.layout.activity_news_feed_empty2);
         items = new ArrayList<>();
         opener = new NewsFeedFavOpener(this);
         db =  opener.getWritableDatabase();
 
-        Bundle dataToPass = getIntent().getExtras(); //get the data that was passed from FragmentExample
+        Bundle dataToPass = getIntent().getExtras();
 
-        //This is copied directly from FragmentExample.java lines 47-54
+
         NewsFeedDetailFragment2 dFragment = new NewsFeedDetailFragment2();
-        dFragment.setArguments( dataToPass ); //pass data to the the fragment
+        dFragment.setArguments( dataToPass );
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragmentLocation2, dFragment)
@@ -48,6 +60,9 @@ public class NewsFeedEmptyActivity2 extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        /**
+         * Inflates the toolbar
+         */
         MenuInflater inflater =  getMenuInflater();
         inflater.inflate(R.menu.new_feed_favorites_menu, menu);
         return true;
@@ -56,6 +71,10 @@ public class NewsFeedEmptyActivity2 extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
+            /**
+             * Removes the deleted item from the NewsFeedFav Table
+             */
             case R.id.removefavorites:
 
                 String [] columns = {NewsFeedFavOpener.COL_ID, NewsFeedFavOpener.COL_TITLE,  NewsFeedFavOpener.COL_CONTENT};
