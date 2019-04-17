@@ -22,23 +22,24 @@
     <string name="dictSnackbarDismiss">Rejeter</string>
     <string name="dictSnackbarText">Mot ajouté</string>
     <string name="wordNotFound">Mot non trouvé…</string>
+    <string name="wordDeleted"> a été supprimé!</string>
+    <string name="noWordToSave">No word to save!</string>
     <string name="suggestTitle">Suggestions:</string>
     <string name="noSuggestions">Pas de suggestions</string>
     <string name="dInfo1">Dictionnaire Webster Merriam</string>
     <string name="dInfo2">CST2335</string>
     <string name="dInfo3">Programmation d\'interface graphique mobile</string>
     <string name="dInfo4">Auteur: Nick Hallarn</string>
-    <string name="dInfo5">Version 1.1 - April 1st, 2019</string>
+    <string name="dInfo5">Version 1.3 – 9 April, 2019</string>
     <string name="dictInstructions">Instructions: \n
         Pour utiliser cette application, tapez un mot dans la barre de recherche et cliquez sur OK.
         La définition de la le mot recherché apparaîtra dans la fenêtre principale. Pour enregistrer
         le mot dans la fenêtre principale, tapez sur le bouton de sauvegarde en bas de l\'écran.
         Pour voir les mots sauvegardés, tapez sur l\’icône du dossier sur le barre d\'outils.
         Cela chargera une liste de mots sauvegardés par l\'utilisateur. Cliquez sur un mot dans la
-        liste pour voir c\'est la définition ou le supprimer de la liste.
+        liste pour voir sa définition ou cliquez sur le bouton "X" pour le retirer de la liste.
     </string>
-
-
+    <string name="deleteWord">Delete</string>
     <string name="article_confirm">Vous serez redirigé vers le site Web de NYTimes. D\'accord?</string>
     <string name="nytimes_about3">Version 1: 29 mars 2019</string>
     <string name="nytimes_about4">Développé par: Youssef Rizk</string>
@@ -59,5 +60,7 @@
     <string name="delete">Effacer</string>
     <string name="newSearchButton">Chercher</string>
     <string name="newsfeedsearch">Chercher</string>
+
     <string name="newsfeedWarning">La barre de progression ne fonctionne pas, veuillez patienter et Data Will Load</string>
+
 </resources>

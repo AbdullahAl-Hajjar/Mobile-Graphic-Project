@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/savedWordsLayout">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/savedWordsTb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/colorPrimary" />
+
+    <ListView
+        android:layout_below="@id/savedWordsTb"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/wordList"/>
+
+    <FrameLayout
+        android:id="@+id/fragmentLocation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/wordList"
+        android:background="@android:color/transparent"
+        android:visibility="invisible" />
+</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
