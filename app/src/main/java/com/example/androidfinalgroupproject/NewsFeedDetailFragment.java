@@ -22,6 +22,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class NewsFeedDetailFragment extends Fragment {
+
+    /**
+     * Fragment displays the content of the click item
+     */
     private Bundle dataFromActivity;
     private long id;
     private  String message;
@@ -54,6 +58,7 @@ public class NewsFeedDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
 
+
         dataFromActivity = getArguments();
         id = dataFromActivity.getLong(NewsFeed.ITEM_ID );
         message = dataFromActivity.getString(NewsFeed.ITEM_SELECTED);
@@ -74,6 +79,9 @@ public class NewsFeedDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        /**
+         * Checks which item was clicked then compares it to the database to retreive its content
+         */
         title = dataFromActivity.getString(NewsFeed.ITEM_SELECTED);
         trueTitle = result.findViewById(R.id.newsfeedtitle);
         trueTitle.setText(title);
@@ -95,6 +103,9 @@ public class NewsFeedDetailFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        /**
+         *
+         */
         NewsFeedEmptyActivity parent = (NewsFeedEmptyActivity) getActivity();
         parent.finish();
     }

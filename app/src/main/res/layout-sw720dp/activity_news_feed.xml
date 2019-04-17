@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/newsfeedlayout">
+
+
+        <EditText
+            android:id="@+id/newsfeedsearchbar"
+            android:layout_width="369dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="@string/newsfeedsearch"
+            android:inputType="textPersonName"
+            android:backgroundTint="@color/colorGrey"/>
+
+        <ListView
+            android:id="@+id/newslistview"
+            android:layout_width="421dp"
+            android:layout_height="731dp"
+            android:layout_below="@id/newsfeedsearchbar"
+            android:layout_marginTop="8dp" />
+
+        <ImageButton
+            android:id="@+id/button"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@id/newsfeedsearchbar"
+
+
+            android:src="@drawable/searchbutton" />
+
+
+        <ProgressBar
+            android:id="@+id/simpleProgressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="366dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimary" />
+
+
+        <FrameLayout
+            android:id="@+id/fragmentLocationtablet"
+            android:layout_width="376dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="58dp"
+            android:layout_toRightOf="@id/simpleProgressBar"
+            android:background="#FFFFFF" />
+
+
+    </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
