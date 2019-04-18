@@ -12,6 +12,7 @@
         android:id="@+id/dictionaryInfoTb"
         android:background="@color/colorPrimary"/>
 
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,14 +66,17 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/infoLine5">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dictInstructions"
-        android:textAlignment="viewStart"
-        android:textSize="15sp"
-        android:padding="25dp"
-        android:text="@string/dictInstructions"/>
-
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dictInstructions"
+            android:textAlignment="viewStart"
+            android:textSize="15sp"
+            android:paddingHorizontal="25dp"
+            android:text="@string/dictInstructions"/>
+         </ScrollView>
     </RelativeLayout>
 </RelativeLayout>
