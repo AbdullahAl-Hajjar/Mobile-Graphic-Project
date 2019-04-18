@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/indFlightResults">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="TestToolbar">
+        <include layout="@layout/flight_tracker_toolbar"/>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/ftToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+ />
+
+        <TextView
+            android:id="@+id/ftresultstitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/ftToolbar"
+            android:layout_alignParentStart="true"
+            android:text="@string/ft_details_title" />
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ftlocationtitle"
+            android:layout_below="@id/ftresultstitle"
+            android:text="@string/ft_location"
+
+     />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/locationdetails"
+            android:layout_below="@id/ftlocationtitle"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ftspeedtitle"
+            android:layout_below="@id/locationdetails"
+            android:text="@string/ft_speed"
+            />
+
+
+        <TextView
+            android:id="@+id/speeddetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ftspeedtitle"
+            />
+
+        <TextView
+            android:id="@+id/altitudetitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ft_altitude"
+            android:layout_below="@id/speeddetails"
+           />
+
+        <TextView
+            android:id="@+id/altitudedetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/altitudetitle"/>
+
+        <TextView
+            android:id="@+id/statustitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/altitudedetails"
+            android:text="@string/ft_status"/>
+
+        <TextView
+            android:id="@+id/statusdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/statustitle"/>
+
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/saveButton"
+            android:text="@string/saveButton"/>
+
+    </RelativeLayout>
+</RelativeLayout>

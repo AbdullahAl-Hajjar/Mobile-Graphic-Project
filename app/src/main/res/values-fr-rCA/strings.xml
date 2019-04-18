@@ -62,5 +62,18 @@
     <string name="newsfeedsearch">Chercher</string>
 
     <string name="newsfeedWarning">La barre de progression ne fonctionne pas, veuillez patienter et Data Will Load</string>
-
+    <string name="FTTitle">Suivi des vols</string>
+    <string name="ft_details_title">Les détails du vol: </string>
+    <string name="ft_searchDep">Ville de départ</string>
+    <string name="ft_searchArr">Ville d arrivée</string>
+    <string name="ft_location">Emplacement: </string>
+    <string name="ft_speed">La vitesse: </string>
+    <string name="ft_altitude">Altitude: </string>
+    <string name="ft_status">Statut: </string>
+    <string name="ft_flightNumber">Vol: </string>
+    <string name="ft_saved_message">Enregistré dans votre liste de vol</string>
+    <string name="noFlight">Vol non trouvé</string>
+    <string name="Flight">Flight: </string>
+    <string name="DepApt">Départ: </string>
+    <string name="ArrApt">Arrive: </string>
 </resources>

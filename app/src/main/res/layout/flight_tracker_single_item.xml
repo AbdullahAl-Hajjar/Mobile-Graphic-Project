@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ftSingle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/headerFlight"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+
+        android:text="@string/Flight" />
+
+    <TextView
+        android:id="@+id/flight"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headerFlight"
+        android:layout_marginTop="0dp" />
+
+    <TextView
+        android:id="@+id/headerDep"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+
+        android:layout_toEndOf="@id/headerFlight"
+
+        android:layout_marginBottom="0dp"
+        android:text="@string/DepApt" />
+
+    <TextView
+        android:id="@+id/depApt"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_toEndOf="@id/flight"
+        android:layout_below="@+id/headerDep"
+        />
+
+    <TextView
+        android:id="@+id/headerArr"
+        android:layout_toEndOf="@id/headerDep"
+        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:text="@string/ArrApt" />
+
+    <TextView
+        android:id="@+id/arrAprt"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/depApt"
+        android:layout_below="@+id/headerArr"
+        />
+
+</RelativeLayout>

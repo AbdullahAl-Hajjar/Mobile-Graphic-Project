@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent2);
                 break;
             case R.id.airplaneButton:
-                Intent intent3 = new Intent(this, PlaneTracker.class);
+                Intent intent3 = new Intent(this, FlightTracker.class);
                 startActivity(intent3);
                 break;
         }

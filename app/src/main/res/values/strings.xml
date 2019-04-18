@@ -64,6 +64,19 @@
     <string name="newSearchButton">Search</string>
     <string name="newsfeedsearch">Search</string>
     <string name="newsfeedWarning">Progress Bar doesnt work please wait and Data  Will Load</string>
-
+    <string name="FTTitle">Flight Tracker</string>
+    <string name="ft_searchDep">Search as Departure</string>
+    <string name="ft_searchArr">Search as Arrival</string>
+    <string name="ft_details_title">Flight Details: </string>
+    <string name="ft_flightNumber">Flight: </string>
+    <string name="ft_location">Location: </string>
+    <string name="ft_speed">Speed: </string>
+    <string name="ft_altitude">Altitude: </string>
+    <string name="ft_status">Status: </string>
+    <string name="ft_saved_message">Saved to your Flight List</string>
+    <string name="noFlight">Flight not found</string>
+    <string name="Flight">Flight: </string>
+    <string name="DepApt">Departs: </string>
+    <string name="ArrApt">Arrives: </string>
 
 </resources>

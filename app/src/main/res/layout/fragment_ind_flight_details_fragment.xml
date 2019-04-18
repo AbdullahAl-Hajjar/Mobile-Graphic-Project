@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:id="@+id/FlightDetailsImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/paperplane2" />
+
+    <TextView
+        android:id="@+id/FlightNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/FlightDetailsImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="@string/ft_flightNumber" />
+    <TextView
+        android:id="@+id/FlightLocation"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/FlightNumber"
+        android:layout_centerHorizontal="true"
+        android:text="@string/ft_location" />
+
+    <TextView
+        android:id="@+id/FlightAltitude"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/FlightLocation"
+        android:layout_centerHorizontal="true"
+        android:text="@string/ft_altitude" />
+
+    <TextView
+        android:id="@+id/FlightStatus"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/FlightAltitude"
+        android:layout_centerHorizontal="true"
+        android:text="@string/ft_status" />
+
+    <TextView
+        android:id="@+id/FlightSpeed"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/FlightStatus"
+        android:layout_centerHorizontal="true"
+        android:text="@string/ft_speed" />
+
+    <Button
+        android:id="@+id/FlightSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/saveButton" />
+
+
+
+</RelativeLayout>

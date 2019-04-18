@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/FTAsynchResultsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <include layout="@layout/flight_tracker_toolbar"/>
+
+
+    />
+    <ListView
+        android:layout_below="@+id/ftToolbar"
+        android:id="@+id/flightTrackerSearchListview"
+        android:layout_width="match_parent"
+        android:layout_height="627dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/flightTrackerSearchListview">
+
+        <Button
+            android:id="@+id/searchFlightsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/saveButton" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -42,7 +42,8 @@
         <activity
             android:name=".DictionarySavedWords"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".PlaneTracker" />
+        <activity android:name=".FlightTracker"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".NewsFeed" />
         <activity android:name=".MainActivity">
             <intent-filter>
