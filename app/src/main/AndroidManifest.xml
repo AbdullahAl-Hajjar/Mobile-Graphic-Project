@@ -39,6 +39,12 @@
         <activity
             android:name=".DictionaryInfo"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".FlightTrackerAbout"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
         <activity
             android:name=".DictionarySavedWords"
             android:theme="@style/AppTheme.NoActionBar" />
