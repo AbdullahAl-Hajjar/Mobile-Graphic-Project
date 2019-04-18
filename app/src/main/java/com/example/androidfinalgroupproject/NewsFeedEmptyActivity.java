@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 public class NewsFeedEmptyActivity extends AppCompatActivity {
 
+    /**
+     *  Emtpy activity to pass data from bundle
+     */
     private ArrayList<String> items;
     public static SQLiteDatabase dbn;
     private NewsFeedFavOpener opener;
@@ -34,14 +37,17 @@ public class NewsFeedEmptyActivity extends AppCompatActivity {
 
 
         String [] columns = {NewsFeedFavOpener.COL_ID, NewsFeedFavOpener.COL_TITLE,  NewsFeedFavOpener.COL_CONTENT};
-        //Cursor results = dbn.query(false, NewsFeedFavOpener.TABLE_NAME, columns, null, null, null, null, null, null);
+        /**
+         * Cursor results = dbn.query(false, NewsFeedFavOpener.TABLE_NAME, columns, null, null, null, null, null, null);
+         * get the data that was passed from FragmentExample
+         * pass data to the the fragment
+         */
 
 
-        Bundle dataToPass = getIntent().getExtras(); //get the data that was passed from FragmentExample
+        Bundle dataToPass = getIntent().getExtras();
 
-        //This is copied directly from FragmentExample.java lines 47-54
         NewsFeedDetailFragment dFragment = new NewsFeedDetailFragment();
-        dFragment.setArguments( dataToPass ); //pass data to the the fragment
+        dFragment.setArguments( dataToPass );
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragmentLocation, dFragment)
@@ -60,6 +66,9 @@ public class NewsFeedEmptyActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        /**
+         * on Item click listener persists data to NewsFeedFav Table
+         */
         NewsFeedDetailFragment dFragment = new NewsFeedDetailFragment();
         switch (item.getItemId()) {
             case R.id.newsfeedsave:

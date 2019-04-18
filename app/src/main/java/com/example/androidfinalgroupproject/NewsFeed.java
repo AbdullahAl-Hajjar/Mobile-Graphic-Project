@@ -83,50 +83,30 @@ import java.util.Locale;
 public class NewsFeed extends AppCompatActivity {
     /**
      * JsonObject to store strings from the xml 0
+     * TextView in the ojectsLayout 4
+     *  JSONarray to stor JSONobjects 0
+     *  Object of the WebhoseIOClient class 6
+     *  An Array adapter to linflate the listview with the arraylist items 5
+     *  Listeview object form the newsfeed layout 6
+     *  Arraylist that store the items from the JSONarray 0
+     *  Button object from the newsfeed layout 1
+     *  Progressbar for the newsfeed laytut 2
+     *  The speed of the progress bar
+     *  Editbox variable
      */
     private JSONObject result;
-    /**
-     * TextView in the ojectsLayout 4
-     */
     private TextView textView;
-    /**
-     * JSONarray to stor JSONobjects 0
-     */
     private JSONArray postArray;
-    /**
-     * Object of the WebhoseIOClient class 6
-     */
     private WebhoseIOClient webhoseClient;
-    /**
-     * An Array adapter to linflate the listview with the arraylist items 5
-     */
   private ArrayAdapter<String> arrayAdapter;
-    /**
-     * Listeview object form the newsfeed layout 6
-     */
     private  ListView listView;
-    /**
-     * Arraylist that store the items from the JSONarray 0
-     */
     private ArrayList<String> items;
-    /**
-     * Button object from the newsfeed layout 1
-     */
     private ImageButton button;
-    /**
-     * Progressbar for the newsfeed laytut 2
-     */
     private ProgressBar bar;
-    /**
-     * The speed of the progress bar
-     */
     private int progress;
-    /**
-     * Editbox variable
-     */
     private EditText editText;
     private SharedPreferences sharedPref;
-  private TextView text;
+    private TextView text;
     private View view;
 
     public static final String ITEM_SELECTED = "ITEM";
@@ -205,6 +185,7 @@ public class NewsFeed extends AppCompatActivity {
                         editor.putString("keyword", editText.getText().toString());
                         editor.commit();
                         bar.setVisibility(View.VISIBLE);
+                        dbn.execSQL("delete from "+ NewsFeedDatabaseOpener.TABLE_NAME);
                         jsonArr();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -238,6 +219,9 @@ public class NewsFeed extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        /**
+         * Inflates the toolbar
+         */
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.news_feed_menu, menu);
         return true;
@@ -245,7 +229,9 @@ public class NewsFeed extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        /**
+         *  tool bar item listener
+         */
         switch (item.getItemId()) {
             case R.id.help:
             helpBox();
@@ -262,6 +248,9 @@ public class NewsFeed extends AppCompatActivity {
 
 
     public void helpBox() {
+        /**
+         * AlertBox  for information
+         */
         AlertDialog alertDialog = new AlertDialog.Builder(NewsFeed.this).create();
         alertDialog.setTitle("Abdullah Al-Hajjar");
        String language = Locale.getDefault().getLanguage();
@@ -326,7 +315,9 @@ public class NewsFeed extends AppCompatActivity {
 
 public void setDataBase(String title, String content)
 {
-
+    /**
+     * Stores values into the NewsFeed Table
+     */
             ContentValues newRow = new ContentValues();
             newRow.put(NewsFeedDatabaseOpener.COL_TITLE, title);
             newRow.put(NewsFeedDatabaseOpener.COL_CONTENT, content);
@@ -336,6 +327,10 @@ public void setDataBase(String title, String content)
 
     public void printCursor(Cursor c)
     {
+
+        /**
+         * Prints the cursors of the  database
+         */
         String[] columns = c.getColumnNames();
         int colId = c.getColumnIndex(NewsFeedDatabaseOpener.COL_ID);
         int colIndex = c.getColumnIndex(NewsFeedDatabaseOpener.COL_TITLE );
@@ -361,25 +356,16 @@ public void setDataBase(String title, String content)
 class WebhoseIOClient extends AsyncTask<String, Integer, String> {
         /**
          * This is the Json object that will be used to store the Api Content
-         */
-        private JSONObject jObject;
-        /**
          * This main webpage for the news feed api
-         */
-        private static final String WEBHOSE_BASE_URL = "http://webhose.io";
-        /**
          * This will store  the  api key
-         */
-        private  WebhoseIOClient mClient;
-        /**
          * This Stores the Token Key
-         */
-        private String mApiKey;
-        /**
          * This  Stores the item from te JSONarray
          */
+        private JSONObject jObject;
+        private static final String WEBHOSE_BASE_URL = "http://webhose.io";
+        private  WebhoseIOClient mClient;
+        private String mApiKey;
         private ArrayList<String> items;
-
         private ProgressBar progressBar;
 
         public WebhoseIOClient()
@@ -501,11 +487,13 @@ class WebhoseIOClient extends AsyncTask<String, Integer, String> {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            /**
+             * Sorts Json array and persists them to the database by calling  set
+             */
             try {
                 JSONArray postArray = jObject.getJSONArray("posts");
                 for (int i = 0; i < 20; i++) {
-                    if (postArray.getJSONObject(i).getString("title").isEmpty())
+                    if (postArray.getJSONObject(i).getString("title").isEmpty() && postArray.getJSONObject(i).getString("text").isEmpty() )
                     {
                     }
                     else
